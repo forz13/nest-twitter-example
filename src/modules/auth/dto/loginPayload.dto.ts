@@ -1,14 +1,11 @@
-'use strict';
-
 import { TokenPayloadDto } from './tokenPayload.dto';
-import { ReadUser } from '../../user/dto/userRead.dto';
-
+import { ReadUserDto } from '../../user/dto/userRead.dto';
 
 export class LoginPayloadDto {
-    user: ReadUser;
+    user: ReadUserDto;
     token: TokenPayloadDto;
 
-    constructor(user: ReadUser, token: TokenPayloadDto) {
+    constructor(user: ReadUserDto, token: TokenPayloadDto) {
         this.user = user;
         this.token = token;
     }

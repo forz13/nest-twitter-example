@@ -16,7 +16,7 @@ import {AuthService} from './auth.service';
 import {LoginPayloadDto} from './dto/loginPayload.dto';
 import {UserLoginDto} from '../user/dto/userLogin.dto';
 import {UserRegisterDto} from '../user/dto/userRegister.dto';
-import {ReadUser} from '../user/dto/userRead.dto';
+import {ReadUserDto} from '../user/dto/userRead.dto';
 import {AuthGuard} from '../../guards/auth.guard';
 import {AuthUserInterceptor} from '../../interceptors/auth-user-interceptor.service';
 
@@ -30,7 +30,7 @@ export class AuthController {
 
     @Post('register')
     @HttpCode(HttpStatus.OK)
-    async userRegister(@Body() userRegisterDto: UserRegisterDto,): Promise<ReadUser> {
+    async userRegister(@Body() userRegisterDto: UserRegisterDto,): Promise<ReadUserDto> {
         return await this.userService.register(userRegisterDto,);
     }
 

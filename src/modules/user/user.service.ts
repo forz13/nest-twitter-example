@@ -7,7 +7,7 @@ import {HttpException} from '@nestjs/common/exceptions/http.exception';
 import {HttpStatus} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import * as crypto from 'crypto';
-import {ReadUser} from "./dto/userRead.dto";
+import {ReadUserDto} from "./dto/userRead.dto";
 import {UserUpdateProfileDto} from "./dto/userUpdateProfile.dto";
 
 @Injectable()
@@ -20,11 +20,11 @@ export class UserService {
         this.passwordSalt = this.configService.get<string>('APP_SECRET');
     }
 
-    async findOne(id: number): Promise<UserEntity | undefined> {
+    public async findOne(id: number): Promise<UserEntity | undefined> {
         return await this.userRepository.findOne({where: {id}});
     }
 
-    async register(userData: UserRegisterDto) {
+    public async register(userData: UserRegisterDto) {
         const {name, email, password} = userData;
 
         const duplicateEmail = await this.userRepository.find({where: {email}});
@@ -58,8 +58,8 @@ export class UserService {
     }
 
 
-    public static buildUserRO(user: UserEntity): ReadUser {
-        return new ReadUser(user.name, user.email);
+    public static buildUserRO(user: UserEntity): ReadUserDto {
+        return new ReadUserDto(user.name, user.email);
     }
 
     private generatePassword(pass: string, salt): string {

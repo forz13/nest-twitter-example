@@ -1,5 +1,4 @@
-
-export class ReadUser {
+export class ReadUserDto {
     readonly name: string;
     readonly email: string;
 

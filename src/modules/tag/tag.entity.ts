@@ -1,4 +1,4 @@
-import {BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {UtilsService} from '../../providers/utils.service';
 import {TwitHasTags} from '../twit/twitHasTags.entity';
 import {TagSubscribers} from './tagSubscribers.entity';
@@ -12,15 +12,21 @@ export class TagEntity {
     @Column('varchar', {length: 20})
     name: string;
 
-    @Column({type: 'int', default: () => UtilsService.timestamp()})
+    @Column({type: 'int'})
     create_date: number;
 
-    @Column({type: 'int', default: () => UtilsService.timestamp()})
+    @Column({type: 'int'})
     update_date: number;
 
     @BeforeUpdate()
     updateTimestamp() {
         this.update_date = UtilsService.timestamp();
+    }
+
+    @BeforeInsert()
+    setTimestamp() {
+        this.update_date = UtilsService.timestamp();
+        this.create_date = UtilsService.timestamp();
     }
 
     @OneToMany(type => TwitHasTags, twitHasTags => twitHasTags.tag)
