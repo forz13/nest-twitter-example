@@ -9,16 +9,16 @@ import {
     UseInterceptors
 } from '@nestjs/common';
 
-import { AuthUser } from '../../decorators/auth-user.decorator';
+import {AuthUser} from '../../decorators/auth-user.decorator';
 import {UserService} from '../user/user.service';
 import {UserEntity} from '../user/user.entity';
 import {AuthService} from './auth.service';
-import {LoginPayloadDto} from './dto/LoginPayloadDto';
-import {UserLoginDto} from './dto/UserLoginDto';
-import {UserRegisterDto} from './dto/UserRegisterDto';
-import {ReadUser} from '../user/dto/read-user.dto';
+import {LoginPayloadDto} from './dto/loginPayload.dto';
+import {UserLoginDto} from '../user/dto/userLogin.dto';
+import {UserRegisterDto} from '../user/dto/userRegister.dto';
+import {ReadUser} from '../user/dto/userRead.dto';
 import {AuthGuard} from '../../guards/auth.guard';
-import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
+import {AuthUserInterceptor} from '../../interceptors/auth-user-interceptor.service';
 
 @Controller('auth')
 export class AuthController {
@@ -28,29 +28,26 @@ export class AuthController {
     ) {
     }
 
-    @Post('login')
-    @HttpCode(HttpStatus.OK)
-    async userLogin(
-        @Body() userLoginDto: UserLoginDto,
-    ): Promise<LoginPayloadDto> {
-        const userEntity = await this.authService.validateUser(userLoginDto);
-        const token = await this.authService.createToken(userEntity);
-        return new LoginPayloadDto(UserService.buildUserRO(userEntity),token);
-    }
-
     @Post('register')
     @HttpCode(HttpStatus.OK)
-    async userRegister(
-        @Body() userRegisterDto: UserRegisterDto,
-    ): Promise<ReadUser> {
+    async userRegister(@Body() userRegisterDto: UserRegisterDto,): Promise<ReadUser> {
         return await this.userService.register(userRegisterDto,);
     }
+
+    @Post('login')
+    @HttpCode(HttpStatus.OK)
+    async userLogin(@Body() userLoginDto: UserLoginDto,): Promise<LoginPayloadDto> {
+        const userEntity = await this.authService.validateUser(userLoginDto);
+        const token = await this.authService.createToken(userEntity);
+        return new LoginPayloadDto(UserService.buildUserRO(userEntity), token);
+    }
+
 
     @Get('me')
     @HttpCode(HttpStatus.OK)
     @UseGuards(AuthGuard)
     @UseInterceptors(AuthUserInterceptor)
     async getCurrentUser(@AuthUser() user: UserEntity) {
-        return  UserService.buildUserRO(user);
+        return UserService.buildUserRO(user);
     }
 }

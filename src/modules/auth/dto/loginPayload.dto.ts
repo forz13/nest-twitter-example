@@ -1,7 +1,7 @@
 'use strict';
 
-import { TokenPayloadDto } from './TokenPayloadDto';
-import { ReadUser } from '../../user/dto/read-user.dto';
+import { TokenPayloadDto } from './tokenPayload.dto';
+import { ReadUser } from '../../user/dto/userRead.dto';
 
 
 export class LoginPayloadDto {

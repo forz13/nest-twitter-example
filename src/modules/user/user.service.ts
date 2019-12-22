@@ -1,13 +1,14 @@
-import {RegisterUserDto} from './dto/register-user.dto';
-import {forwardRef, Inject, Injectable} from '@nestjs/common';
+import {UserRegisterDto} from './dto/userRegister.dto';
+import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {getRepository, Repository} from 'typeorm';
+import {Repository} from 'typeorm';
 import {UserEntity} from './user.entity';
 import {HttpException} from '@nestjs/common/exceptions/http.exception';
 import {HttpStatus} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import * as crypto from 'crypto';
-import {ReadUser} from "./dto/read-user.dto";
+import {ReadUser} from "./dto/userRead.dto";
+import {UserUpdateProfileDto} from "./dto/userUpdateProfile.dto";
 
 @Injectable()
 export class UserService {
@@ -23,7 +24,7 @@ export class UserService {
         return await this.userRepository.findOne({where: {id}});
     }
 
-    async register(userData: RegisterUserDto) {
+    async register(userData: UserRegisterDto) {
         const {name, email, password} = userData;
 
         const duplicateEmail = await this.userRepository.find({where: {email}});
@@ -37,6 +38,22 @@ export class UserService {
         const salt = this.passwordSalt;
         newUser.password = this.generatePassword(password, salt);
         const savedUser = await this.userRepository.save(newUser);
+        return UserService.buildUserRO(savedUser);
+    }
+
+    public async updateProfile(userID: number, updateDTO: UserUpdateProfileDto) {
+        const user = await this.findOne(userID);
+        if (updateDTO.name) {
+            user.name = updateDTO.name;
+        }
+        if (updateDTO.email) {
+            user.email = updateDTO.email;
+        }
+        if (updateDTO.password) {
+            const salt = this.passwordSalt;
+            user.password = this.generatePassword(updateDTO.password, salt);
+        }
+        const savedUser = await this.userRepository.save(user);
         return UserService.buildUserRO(savedUser);
     }
 
