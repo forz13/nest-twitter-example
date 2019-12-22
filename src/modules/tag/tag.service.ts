@@ -4,10 +4,15 @@ import {Repository} from "typeorm";
 import {TagEntity} from './tag.entity';
 import {TagReadDto} from './dto/tagReadDto'
 import {TagCreateDto} from "./dto/tagCreate.dto";
+import {TwitEntity} from "../twit/twit.entity";
 
 @Injectable()
 export class TagService {
     constructor(@InjectRepository(TagEntity) private readonly tagRepository: Repository<TagEntity>,) {
+    }
+
+    public async find(condition): Promise<TagEntity[] | undefined> {
+        return await this.tagRepository.find(condition);
     }
 
     public async findOne(id: number): Promise<TagEntity | undefined> {

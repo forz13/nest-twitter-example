@@ -1,6 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeUpdate, ManyToOne, BeforeInsert} from 'typeorm';
 import {UserEntity} from '../user/user.entity';
-import {TwitHasTag} from './twitHasTag.entity';
+import {TwitHasTagEntity} from './twitHasTag.entity';
 import {UtilsService} from '../../providers/utils.service'
 
 
@@ -33,7 +33,7 @@ export class TwitEntity {
     @ManyToOne(type => UserEntity, user => user.twits)
     user: UserEntity;
 
-    @OneToMany(type => TwitHasTag, twitHasTags => twitHasTags.twit)
-    twitHasTag: TwitHasTag[];
+    @OneToMany(type => TwitHasTagEntity, twitHasTags => twitHasTags.twit)
+    twitHasTag: TwitHasTagEntity[];
 
 }

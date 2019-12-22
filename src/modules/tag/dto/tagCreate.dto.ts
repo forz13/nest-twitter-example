@@ -4,5 +4,5 @@ export class TagCreateDto {
     @IsString()
     @IsNotEmpty()
     @MaxLength(20)
-    readonly name: string;
+    name: string;
 }

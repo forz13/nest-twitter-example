@@ -1,6 +1,6 @@
 import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {UtilsService} from '../../providers/utils.service';
-import {TwitHasTag} from '../twit/twitHasTag.entity';
+import {TwitHasTagEntity} from '../twit/twitHasTag.entity';
 import {TagSubscribers} from './tagSubscribers.entity';
 
 @Entity('tbl_tag')
@@ -29,8 +29,8 @@ export class TagEntity {
         this.create_date = UtilsService.timestamp();
     }
 
-    @OneToMany(type => TwitHasTag, twitHasTag => twitHasTag.tag)
-    twitHasTag: TwitHasTag[];
+    @OneToMany(type => TwitHasTagEntity, twitHasTag => twitHasTag.tag)
+    twitHasTag: TwitHasTagEntity[];
 
     @OneToMany(type => TagSubscribers, tagSubscribers => tagSubscribers.tag)
     tagSubscribers: TagSubscribers[];

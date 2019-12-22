@@ -4,16 +4,9 @@ import {TwitEntity} from './twit.entity';
 import {UtilsService} from '../../providers/utils.service'
 
 @Entity('tbl_twit_has_tag')
-export class TwitHasTag {
-
+export class TwitHasTagEntity {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column({type: 'int', width: 11})
-    twit_id;
-
-    @Column({type: 'int', width: 11})
-    tag_id;
 
     @Column({type: 'int', default: () => UtilsService.timestamp()})
     create_date;
@@ -32,11 +25,9 @@ export class TwitHasTag {
     }
 
     @ManyToOne(type => TagEntity, tag => tag.twitHasTag)
-    @JoinTable()
     tag: TagEntity;
 
     @ManyToOne(type => TwitEntity, twit => twit.twitHasTag)
-    @JoinTable()
     twit: TwitEntity;
 
 }

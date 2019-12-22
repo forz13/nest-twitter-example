@@ -1,6 +1,6 @@
 import {IsNotEmpty, IsOptional, IsString, MaxLength} from "class-validator";
 
-export class TwitCreateDto {
+export class TwitUpdateDto {
     @IsString()
     @IsNotEmpty()
     @MaxLength(280)
