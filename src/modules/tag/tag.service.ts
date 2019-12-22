@@ -4,7 +4,6 @@ import {Repository} from "typeorm";
 import {TagEntity} from './tag.entity';
 import {TagReadDto} from './dto/tagReadDto'
 import {TagCreateDto} from "./dto/tagCreate.dto";
-import {UserEntity} from "../user/user.entity";
 
 @Injectable()
 export class TagService {
@@ -15,7 +14,7 @@ export class TagService {
         return await this.tagRepository.findOne({where: {id}});
     }
 
-    public async create(@Body() createDto: TagCreateDto): Promise<TagEntity> {
+    public async create(createDto: TagCreateDto): Promise<TagEntity> {
         const newTag = new TagEntity();
         newTag.name = createDto.name;
         return await this.tagRepository.save(newTag);

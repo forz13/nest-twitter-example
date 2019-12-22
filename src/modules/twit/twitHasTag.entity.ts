@@ -1,10 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeUpdate, ManyToOne} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeUpdate, ManyToOne, BeforeInsert,JoinTable} from 'typeorm';
 import {TagEntity} from '../tag/tag.entity';
 import {TwitEntity} from './twit.entity';
 import {UtilsService} from '../../providers/utils.service'
 
-@Entity('tbl_twit_has_tags')
-export class TwitHasTags {
+@Entity('tbl_twit_has_tag')
+export class TwitHasTag {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -25,11 +25,18 @@ export class TwitHasTags {
     updateTimestamp() {
         this.update_date = UtilsService.timestamp();
     }
+    @BeforeInsert()
+    setTimestamp() {
+        this.update_date = UtilsService.timestamp();
+        this.create_date = UtilsService.timestamp();
+    }
 
-    @ManyToOne(type => TagEntity, tag => tag.twitHasTags)
+    @ManyToOne(type => TagEntity, tag => tag.twitHasTag)
+    @JoinTable()
     tag: TagEntity;
 
-    @ManyToOne(type => TwitEntity, twit => twit.twitHasTags)
+    @ManyToOne(type => TwitEntity, twit => twit.twitHasTag)
+    @JoinTable()
     twit: TwitEntity;
 
 }

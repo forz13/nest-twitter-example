@@ -1,5 +1,6 @@
 /* tslint:disable:quotemark object-literal-sort-keys */
 import * as dotenv from 'dotenv';
+import {SnakeNamingStrategy } from './src/snake-naming.strategy'
 
 dotenv.config({
     path: `.env`,
@@ -13,6 +14,7 @@ module.exports = {
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+    namingStrategy: new SnakeNamingStrategy(),
     entities: [
         'src/modules/**/*.entity{.ts,.js}',
     ],

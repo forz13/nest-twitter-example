@@ -26,7 +26,7 @@ export class CreateTblTwitHasTag1576837070107 implements MigrationInterface {
                     width: 11,
                 },
                 {
-                    name: 'created_date',
+                    name: 'create_date',
                     type: 'int',
                     width: 11,
                 },

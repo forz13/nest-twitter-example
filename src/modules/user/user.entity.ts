@@ -37,7 +37,7 @@ export class UserEntity {
         this.update_date = UtilsService.timestamp();
     }
 
-    @OneToMany(type => TwitEntity, twit => twit.user_id)
+    @OneToMany(type => TwitEntity, twit => twit.user)
     twits: TwitEntity[];
 
     @OneToMany(type => TagSubscribers, tagSubscribers => tagSubscribers.user)
