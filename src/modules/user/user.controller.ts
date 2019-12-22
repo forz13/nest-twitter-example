@@ -6,13 +6,4 @@ import { UserService } from './user.service';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Post('register')
-    @HttpCode(200)
-    async register(@Body() userData: RegisterUserDto) {
-        return await this.userService.register(userData);
-    }
-    @Post('auth')
-    async auth(): Promise<string> {
-        return 'lala';
-    }
 }

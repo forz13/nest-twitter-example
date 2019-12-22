@@ -1,23 +1,30 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { TwitModule } from './twit/twit.module';
-import { TagModule } from './tag/tag.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import {ConfigModule, ConfigService} from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {UserModule} from './modules/user/user.module';
+import {TwitModule} from './modules/twit/twit.module';
+import {TagModule} from './modules/tag/tag.module';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {ConfigService} from './shared/services/config.service';
+import {SharedModule} from './shared/shared.module';
+import {AuthModule} from "./modules/auth/auth.module";
 
 @Module({
-  imports: [ConfigModule.forRoot( { isGlobal: true}),
-    TypeOrmModule.forRoot(),
-    UserModule,
-    TwitModule,
-    TagModule,
-    AuthModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        TypeOrmModule.forRootAsync({
+            imports: [SharedModule],
+            useFactory: (configService: ConfigService) =>
+                configService.typeOrmConfig,
+            inject: [ConfigService],
+        }),
+        UserModule,
+        TwitModule,
+        TagModule,
+        AuthModule,
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 
-export class AppModule {}
+export class AppModule {
+}

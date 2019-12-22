@@ -18,7 +18,7 @@ export class CreateTblTag1576830300705 implements MigrationInterface {
                 {
                     name: 'name',
                     type: 'varchar',
-                    length: '280',
+                    length: '20',
                 },
                 {
                     name: 'create_date',
