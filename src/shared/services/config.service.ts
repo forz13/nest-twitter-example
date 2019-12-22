@@ -54,7 +54,6 @@ export class ConfigService {
                 return migration;
             });
         }
-        console.log(this.get('MYSQL_HOST'));
         return {
             entities,
             migrations,

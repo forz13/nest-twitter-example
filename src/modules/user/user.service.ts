@@ -19,8 +19,8 @@ export class UserService {
         this.passwordSalt = this.configService.get<string>('APP_SECRET');
     }
 
-    async findOne(email: string): Promise<UserEntity | undefined> {
-        return await this.userRepository.findOne({where: {email}});
+    async findOne(id: number): Promise<UserEntity | undefined> {
+        return await this.userRepository.findOne({where: {id}});
     }
 
     async register(userData: RegisterUserDto) {
@@ -49,7 +49,7 @@ export class UserService {
         return crypto.createHmac('sha256', this.passwordSalt).update(pass).digest('hex');
     }
 
-    public async authenticateUser(email: string, password: string): Promise<UserEntity | undefined> {
+    public async authenticate(email: string, password: string): Promise<UserEntity | undefined> {
         let user: UserEntity;
         user = await this.userRepository.findOne({where: {email}});
         const passHash = crypto.createHmac('sha256', this.passwordSalt).update(password).digest('hex');
