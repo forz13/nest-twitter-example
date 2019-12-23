@@ -59,7 +59,7 @@ export class UserService {
 
 
     public static buildUserRO(user: UserEntity): ReadUserDto {
-        return new ReadUserDto(user.name, user.email);
+        return new ReadUserDto(user);
     }
 
     private generatePassword(pass: string, salt): string {

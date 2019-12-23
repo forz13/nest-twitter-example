@@ -44,6 +44,10 @@ export class TwitService {
         return await this.twitRepository.findOne(options);
     }
 
+    public async save(twitEntity: TwitEntity) {
+        return await this.twitRepository.save(twitEntity);
+    }
+
     public async update(id: number, @Body() createDto: TwitCreateDto): Promise<TwitEntity> {
         const options = {where: {id}, relations: ["user", "twitHasTag", "twitHasTag.tag"]};
         let twit: TwitEntity = await this.twitRepository.findOne(options);
@@ -115,7 +119,7 @@ export class TwitService {
         return await this.twitHasTagRepository.delete({twit});
     }
 
-    private async saveTags(twit: TwitEntity, tags: string) {
+    public async saveTags(twit: TwitEntity, tags: string) {
         const tagsArray = this.tagsStringToArray(tags);
         for (let someTag of tagsArray) {
             try {

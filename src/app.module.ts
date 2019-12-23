@@ -25,6 +25,7 @@ import {contextMiddleware} from './middlewares';
     ],
     controllers: [AppController],
     providers: [AppService],
+    exports: [UserModule, TagModule, TwitModule]
 })
 
 export class AppModule implements NestModule {

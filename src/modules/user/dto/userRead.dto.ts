@@ -1,9 +1,14 @@
+import {UserEntity} from "../user.entity";
+
 export class ReadUserDto {
+    readonly id: number;
     readonly name: string;
     readonly email: string;
 
-    constructor(name: string, email: string) {
-        this.name = name;
-        this.email = email;
+
+    constructor(user: UserEntity) {
+        this.name = user.name;
+        this.email = user.email;
+        this.id = user.id
     }
 }
