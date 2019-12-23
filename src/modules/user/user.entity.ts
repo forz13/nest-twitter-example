@@ -17,7 +17,7 @@ export class UserEntity {
     @IsEmail()
     email: string;
 
-    @Column('varchar', {length: 50})
+    @Column('varchar', {length: 200})
     password: string;
 
     @Column({type: 'int'})

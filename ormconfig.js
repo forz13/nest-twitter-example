@@ -9,6 +9,7 @@ dotenv.config({
 module.exports = {
     type: 'mysql',
     host: process.env.MYSQL_HOST,
+    keepConnectionAlive: true,
     port: process.env.MYSQL_PORT,
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,

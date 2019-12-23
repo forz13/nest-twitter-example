@@ -10,7 +10,7 @@ RUN npm run build
 FROM node:dubnium AS node_modules
 COPY package.json package-lock.json ./
 
-RUN npm install --prod
+RUN npm install
 
 FROM node:dubnium
 
@@ -28,3 +28,7 @@ COPY . /usr/src/app
 EXPOSE $PORT
 
 CMD npm run start:prod
+
+
+
+

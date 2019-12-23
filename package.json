@@ -12,6 +12,7 @@
         "migration:generate": "ts-node node_modules/typeorm/cli.js migration:generate -f ormconfig -d src/migrations -n",
         "migration:create": "ts-node node_modules/typeorm/cli.js migration:create -f ormconfig -d src/migrations -n",
         "migration:run": "ts-node node_modules/typeorm/cli.js migration:run -f ormconfig",
+        "migration:run-prod": "ts-node node_modules/typeorm/cli.js migration:run",
         "migration:revert": "ts-node node_modules/typeorm/cli.js migration:revert -f ormconfig",
         "watch:dev": "nodemon --config nodemon.json",
         "debug:dev": "nodemon --config nodemon-debug.json",
@@ -25,7 +26,8 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "fill-db": "ts-node -r tsconfig-paths/register src/console/fillDBWithFakeData"
+        "fill-db": "ts-node -r tsconfig-paths/register src/console/fillDBWithFakeData",
+        "fill-db:prod": "node dist/console/fillDBWithFakeData"
     },
     "dependencies": {
         "@nestjs/common": "^6.7.2",
