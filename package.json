@@ -1,8 +1,8 @@
 {
     "name": "nest-twitter-example",
     "version": "0.0.1",
-    "description": "",
-    "author": "",
+    "description": "twitter-like api",
+    "author": "forz13",
     "license": "MIT",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
