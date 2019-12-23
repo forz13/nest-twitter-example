@@ -11,7 +11,7 @@ Twitter-like api
 
 -MYSQL>=5.7
 
- Установить зависмости
+ Установить зависимости
 ```bash
 npm i
 ``` 
@@ -50,7 +50,7 @@ docker container exec -it 0801a4230ec0 npm run fill-db:prod
 
 ## API
 
-В корне проекта раполагается postman(https://www.getpostman.com/) коллекция  
+В корне проекта располагается postman коллекция(https://www.getpostman.com/)   
 twitter.postman_collection
 
 ##### Авторизация
