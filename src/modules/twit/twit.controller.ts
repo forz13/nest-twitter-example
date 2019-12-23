@@ -1,11 +1,23 @@
-import {Body, Controller, Get, HttpCode, Param, Post, UseGuards, UseInterceptors} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    Param,
+    Post,
+    UseGuards,
+    UseInterceptors,
+    Query,
+    ValidationPipe
+} from '@nestjs/common';
 import {AuthGuard} from "../../guards/auth.guard";
 import {AuthUserInterceptor} from "../../interceptors/auth-user-interceptor.service";
 import {TwitService} from "./twit.service";
 import {TwitNotFoundException} from "../../exceptions/twit-not-found.exception";
 import {TwitCreateDto} from "./twit/twitCreate.dto";
 import {TwitUpdateDto} from "./twit/twitUpdate.dto";
-import {TagNotFoundException} from "../../exceptions/tag-not-found.exception";
+import {TwitPageOptionsDto} from "./twit/twitPageOptionsDto";
+import {TwitPageDto} from "./twit/twitPageDto";
 
 @Controller('twit')
 @UseGuards(AuthGuard)
@@ -13,6 +25,13 @@ import {TagNotFoundException} from "../../exceptions/tag-not-found.exception";
 export class TwitController {
     constructor(private readonly twitService: TwitService) {
     }
+
+    @Get('twits')
+    async getTwits(
+        @Query(new ValidationPipe({transform: true})) pageOptionsDto: TwitPageOptionsDto,): Promise<TwitPageDto> {
+        return this.twitService.getTwits(pageOptionsDto);
+    }
+
 
     @Get(':id')
     async getTwit(@Param() params) {

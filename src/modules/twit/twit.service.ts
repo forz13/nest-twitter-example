@@ -9,6 +9,10 @@ import {TwitHasTagEntity} from "./twitHasTag.entity";
 import {TagEntity} from "../tag/tag.entity";
 import {TagService} from "../tag/tag.service";
 import {TagCreateDto} from "../tag/dto/tagCreate.dto";
+import {TwitPageOptionsDto} from "./twit/twitPageOptionsDto";
+import {TwitPageDto} from "./twit/twitPageDto";
+import {PageMetaDto} from "../../common/dto/PageMetaDto";
+import {UtilsService} from "../../providers/utils.service";
 
 @Injectable()
 export class TwitService {
@@ -51,18 +55,68 @@ export class TwitService {
         return await this.twitRepository.findOne(options);
     }
 
+    async getTwits(pageOptionsDto: TwitPageOptionsDto): Promise<TwitPageDto> {
+        const queryBuilder = this.twitRepository.createQueryBuilder('twit');
+        if (pageOptionsDto.q) {
+            queryBuilder.where("twit.text like :text", {text: '%' + pageOptionsDto.q + '%'})
+        }
+
+        if (pageOptionsDto.create_date_start) {
+            const createStartTimestamp = UtilsService.dateStringToUnixTimestamp(pageOptionsDto.create_date_start);
+            queryBuilder.andWhere('twit.create_date >= :createStartTimestamp', {createStartTimestamp})
+        }
+
+        if (pageOptionsDto.create_date_end) {
+            const createEndTimestamp = UtilsService.dateStringToUnixTimestamp(pageOptionsDto.create_date_end);
+            queryBuilder.andWhere('twit.create_date <= :createEndTimestamp', {createEndTimestamp})
+        }
+
+        queryBuilder
+            .leftJoinAndSelect("twit.user", "user")
+            .leftJoinAndSelect("twit.twitHasTag", "twitHasTag")
+            .leftJoinAndSelect("twitHasTag.tag", "tag");
+
+        if (pageOptionsDto.tags) {
+            const tagsArray = this.tagsStringToArray(pageOptionsDto.tags);
+            queryBuilder.andWhere('tag.name IN (:tagsArray)', {tagsArray})
+        }
+
+        if (pageOptionsDto.order) {
+            queryBuilder.orderBy('twit.create_date', pageOptionsDto.order)
+        }
+
+
+        const builder = queryBuilder
+            .skip(pageOptionsDto.skip)
+            .take(pageOptionsDto.take)
+            .getManyAndCount();
+
+
+        const [twits, twitsCount] = await builder;
+
+        const pageMetaDto = new PageMetaDto({
+            pageOptionsDto,
+            itemCount: twitsCount,
+        });
+
+        const twitsRead = [];
+        twits.map(twit => {
+            twitsRead.push(TwitService.buildTwitRO(twit));
+        });
+        return new TwitPageDto(twitsRead, pageMetaDto);
+    }
+
     private async updateTags(twit: TwitEntity, tags: string) {
-        await this.deleteTagsByTwit(twit)
+        await this.deleteTagsByTwit(twit);
         await this.saveTags(twit, tags);
     }
 
-    public async deleteTagsByTwit(twit: TwitEntity) {
+    private async deleteTagsByTwit(twit: TwitEntity) {
         return await this.twitHasTagRepository.delete({twit});
     }
 
     private async saveTags(twit: TwitEntity, tags: string) {
-        let tagsArray = tags.split('#');
-        tagsArray = tagsArray.filter(val => val !== "");
+        const tagsArray = this.tagsStringToArray(tags);
         for (let someTag of tagsArray) {
             try {
                 let tag: TagEntity;
@@ -81,5 +135,10 @@ export class TwitService {
             } catch (err) {
             }
         }
+    }
+
+    private tagsStringToArray(tags: string) {
+        let tagsArray = tags.split(';');
+        return tagsArray.filter(val => val !== '');
     }
 }
