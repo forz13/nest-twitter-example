@@ -51,6 +51,9 @@ export class TwitService {
     public async update(id: number, @Body() createDto: TwitCreateDto): Promise<TwitEntity> {
         const options = {where: {id}, relations: ["user", "twitHasTag", "twitHasTag.tag"]};
         let twit: TwitEntity = await this.twitRepository.findOne(options);
+        if (!twit) {
+            return;
+        }
         twit.text = createDto.text;
         twit = await this.twitRepository.save(twit);
         if (createDto.tags) {
