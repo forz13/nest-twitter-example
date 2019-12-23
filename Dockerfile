@@ -1,16 +1,16 @@
 FROM node:dubnium AS dist
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . ./
 
-RUN yarn build
+RUN npm run build
 
 FROM node:dubnium AS node_modules
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN yarn install --prod
+RUN npm install --prod
 
 FROM node:dubnium
 
@@ -27,4 +27,4 @@ COPY . /usr/src/app
 
 EXPOSE $PORT
 
-CMD [ "yarn", "start:prod" ]
+CMD npm run start:prod

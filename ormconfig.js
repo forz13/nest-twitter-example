@@ -6,7 +6,6 @@ dotenv.config({
     path: `.env`,
 });
 
-console.log(process.env);
 module.exports = {
     type: 'mysql',
     host: process.env.MYSQL_HOST,

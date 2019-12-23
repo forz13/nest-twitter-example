@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import {TypeOrmModuleOptions} from '@nestjs/typeorm';
 import {SnakeNamingStrategy} from "../../snake-naming.strategy";
-
 
 
 export class ConfigService {
@@ -66,7 +65,7 @@ export class ConfigService {
             password: this.get('MYSQL_PASSWORD'),
             database: this.get('MYSQL_DATABASE'),
             migrationsRun: false,
-            synchronize:false,
+            synchronize: false,
             namingStrategy: new SnakeNamingStrategy()
         };
     }
