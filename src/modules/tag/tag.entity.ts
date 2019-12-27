@@ -1,7 +1,7 @@
 import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {UtilsService} from '../../providers/utils.service';
 import {TwitHasTagEntity} from '../twit/twitHasTag.entity';
-import {TagSubscribers} from './tagSubscribers.entity';
+import {TagSubscribersEntity} from './tagSubscribers.entity';
 
 @Entity('tbl_tag')
 export class TagEntity {
@@ -32,6 +32,6 @@ export class TagEntity {
     @OneToMany(type => TwitHasTagEntity, twitHasTag => twitHasTag.tag)
     twitHasTag: TwitHasTagEntity[];
 
-    @OneToMany(type => TagSubscribers, tagSubscribers => tagSubscribers.tag)
-    tagSubscribers: TagSubscribers[];
+    @OneToMany(type => TagSubscribersEntity, tagSubscribers => tagSubscribers.tag)
+    tagSubscribers: TagSubscribersEntity[];
 }

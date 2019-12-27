@@ -18,6 +18,9 @@ import {TwitCreateDto} from "./twit/twitCreate.dto";
 import {TwitUpdateDto} from "./twit/twitUpdate.dto";
 import {TwitPageOptionsDto} from "./twit/twitPageOptionsDto";
 import {TwitPageDto} from "./twit/twitPageDto";
+import {AuthUser} from "../../decorators/auth-user.decorator";
+import {UserEntity} from "../user/user.entity";
+import {TwitReadDto} from "./twit/twitReadDto";
 
 @Controller('twit')
 @UseGuards(AuthGuard)
@@ -34,8 +37,8 @@ export class TwitController {
 
 
     @Get(':id')
-    async getTwit(@Param() params) {
-        const twit = await this.twitService.findOne(params.id, ["user", "twitHasTag", "twitHasTag.tag"]);
+    async getTwit(@Param() params): Promise<TwitReadDto> {
+        const twit = await this.twitService.findOne(params.id, this.twitService.extraRelations());
         if (!twit) {
             throw new TwitNotFoundException();
         }
@@ -44,18 +47,32 @@ export class TwitController {
 
     @Post()
     @HttpCode(200)
-    async createTwit(@Body() createDto: TwitCreateDto) {
-        const twit = await this.twitService.create(createDto);
-        return TwitService.buildTwitRO(twit);
+    async createTwit(@AuthUser() user: UserEntity, @Body() createDto: TwitCreateDto): Promise<TwitReadDto> {
+        const twit = await this.twitService.create(user.id, createDto);
+        const twitExtra = await this.twitService.findOne(twit.id, this.twitService.extraRelations());
+        return TwitService.buildTwitRO(twitExtra);
     }
 
     @Post(':id')
     @HttpCode(200)
-    async updateTwit(@Body() updateDto: TwitUpdateDto, @Param() params) {
-        const twit = await this.twitService.update(params.id, updateDto);
+    async updateTwit(@AuthUser() user: UserEntity, @Body() updateDto: TwitUpdateDto, @Param() params): Promise<TwitReadDto> {
+        const twit = await this.twitService.update(user.id, params.id, updateDto);
         if (!twit) {
             throw new TwitNotFoundException();
         }
-        return TwitService.buildTwitRO(twit);
+        const twitExtra = await this.twitService.findOne(twit.id, this.twitService.extraRelations());
+        return TwitService.buildTwitRO(twitExtra);
+    }
+
+    @Post(':id/like')
+    @HttpCode(200)
+    async setLike(@AuthUser() user: UserEntity, @Param() params): Promise<TwitReadDto> {
+        const twitWithLike = await this.twitService.findOne(params.id);
+        if (!twitWithLike) {
+            throw new TwitNotFoundException();
+        }
+        await this.twitService.setLike(user.id, twitWithLike);
+        const twitExtra = await this.twitService.findOne(params.id, this.twitService.extraRelations());
+        return TwitService.buildTwitRO(twitExtra);
     }
 }

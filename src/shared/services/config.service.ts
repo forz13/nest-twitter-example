@@ -9,7 +9,7 @@ export class ConfigService {
         dotenv.config({
             path: `.env`,
         });
-        // Replace \\n with \n to support multiline strings in AWS
+
         for (const envName of Object.keys(process.env)) {
             process.env[envName] = process.env[envName].replace(/\\n/g, '\n');
         }

@@ -24,9 +24,8 @@ export class UserService {
         return await this.userRepository.findOne({where: {id}});
     }
 
-    public async register(userData: UserRegisterDto) {
+    public async register(userData: UserRegisterDto): Promise<UserEntity> {
         const {name, email, password} = userData;
-
         const duplicateEmail = await this.userRepository.find({where: {email}});
         if (duplicateEmail.length) {
             const errors = {username: 'Email must be unique.'};
@@ -37,11 +36,11 @@ export class UserService {
         newUser.email = email;
         const salt = this.passwordSalt;
         newUser.password = this.generatePassword(password, salt);
-        const savedUser = await this.userRepository.save(newUser);
-        return UserService.buildUserRO(savedUser);
+        return await this.userRepository.save(newUser);
+
     }
 
-    public async updateProfile(userID: number, updateDTO: UserUpdateProfileDto) {
+    public async updateProfile(userID: number, updateDTO: UserUpdateProfileDto): Promise<UserEntity> {
         const user = await this.findOne(userID);
         if (updateDTO.name) {
             user.name = updateDTO.name;
@@ -53,8 +52,8 @@ export class UserService {
             const salt = this.passwordSalt;
             user.password = this.generatePassword(updateDTO.password, salt);
         }
-        const savedUser = await this.userRepository.save(user);
-        return UserService.buildUserRO(savedUser);
+        return await this.userRepository.save(user);
+
     }
 
 

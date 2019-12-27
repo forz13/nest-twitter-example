@@ -1,10 +1,10 @@
-import {BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {TagEntity} from './tag.entity';
 import {UserEntity} from '../user/user.entity';
 import {UtilsService} from '../../providers/utils.service';
 
 @Entity('tbl_tag_subscribers')
-export class TagSubscribers {
+export class TagSubscribersEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -15,10 +15,10 @@ export class TagSubscribers {
     @Column({type: 'int', width: 11})
     tag_id;
 
-    @Column({type: 'int', default: () => UtilsService.timestamp()})
+    @Column({type: 'int'})
     create_date: number;
 
-    @Column({type: 'int', default: () => UtilsService.timestamp()})
+    @Column({type: 'int'})
     update_date: number;
 
     @BeforeUpdate()

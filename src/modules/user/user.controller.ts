@@ -21,6 +21,7 @@ export class UserController {
     @Post()
     @HttpCode(200)
     async updateProfile(@AuthUser() user: UserEntity, @Body() updateDTO: UserUpdateProfileDto) {
-        return await this.userService.updateProfile(user.id, updateDTO);
+        const savedUser = await this.userService.updateProfile(user.id, updateDTO);
+        return UserService.buildUserRO(savedUser);
     }
 }

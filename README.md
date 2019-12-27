@@ -8,7 +8,7 @@ Twitter-like api
 
 - Node.js>=v10.x
 
-- MySQL>=5.7
+- MySQL>=v5.7.x
 
  Установить зависимости
 ```bash
@@ -29,7 +29,7 @@ npm run fill-db
 
 ## Для запуска в контейнере (Docker)
 Создать и заполнить .env файл по примеру .env.example
- (MYSQL_HOST=mysql1 оставить также, иначе может не работать)
+ (MYSQL_HOST=mysql1 не менять)
 
  Собрать и запустить проект
 ```bash
@@ -38,7 +38,12 @@ docker-compose up
 ``` 
 При необходимости заполнить БД тестовыми данными
 
-Для этого нужно узнать id контейнера нашего приложения
+Используя docker-compose
+```bash
+ docker-compose exec app npm run fill-db:prod
+``` 
+
+Либо через docker, для этого нужно узнать id контейнера нашего приложения
 ```bash
 docker container ls
 ``` 

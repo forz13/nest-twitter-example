@@ -7,6 +7,7 @@ export class TwitReadDto {
     update_date: number;
     user: { id: number, name: string };
     tags: { tag_id: number, name: string }[] = [];
+    likes: { user_id: number }[] = [];
 
     constructor(twit: TwitEntity) {
         this.id = twit.id;
@@ -15,6 +16,7 @@ export class TwitReadDto {
         this.update_date = twit.update_date;
         this.setTags(twit);
         this.setUser(twit);
+        this.setLikes(twit);
     }
 
     private setUser(twit: TwitEntity) {
@@ -32,6 +34,14 @@ export class TwitReadDto {
                 if (twitTag.tag) {
                     this.tags.push({tag_id: twitTag.tag.id, name: twitTag.tag.name});
                 }
+            }
+        }
+    }
+
+    private setLikes(twit: TwitEntity) {
+        if (twit.twitHasLike && twit.twitHasLike.length) {
+            for (let twitLike of twit.twitHasLike) {
+                this.likes.push({user_id: twitLike.user_id});
             }
         }
     }

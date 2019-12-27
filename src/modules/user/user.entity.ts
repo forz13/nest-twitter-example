@@ -2,7 +2,8 @@ import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneT
 import {IsEmail} from 'class-validator';
 import {UtilsService} from '../../providers/utils.service'
 import {TwitEntity} from '../twit/twit.entity';
-import {TagSubscribers} from '../tag/tagSubscribers.entity';
+import {TagSubscribersEntity} from '../tag/tagSubscribers.entity';
+import {TwitLikeEntity} from "../twit/twitLike.entity";
 
 @Entity('tbl_user')
 export class UserEntity {
@@ -40,6 +41,9 @@ export class UserEntity {
     @OneToMany(type => TwitEntity, twit => twit.user)
     twits: TwitEntity[];
 
-    @OneToMany(type => TagSubscribers, tagSubscribers => tagSubscribers.user)
-    tagSubscribers: TagSubscribers[];
+    @OneToMany(type => TagSubscribersEntity, tagSubscribers => tagSubscribers.user)
+    tagSubscribers: TagSubscribersEntity[];
+
+    @OneToMany(type => TwitLikeEntity, twitLike => twitLike.user)
+    likes: TwitLikeEntity[];
 }

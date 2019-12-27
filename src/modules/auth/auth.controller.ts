@@ -31,7 +31,8 @@ export class AuthController {
     @Post('register')
     @HttpCode(HttpStatus.OK)
     async userRegister(@Body() userRegisterDto: UserRegisterDto,): Promise<ReadUserDto> {
-        return await this.userService.register(userRegisterDto,);
+        const user = await this.userService.register(userRegisterDto,);
+        return UserService.buildUserRO(user);
     }
 
     @Post('login')
@@ -47,7 +48,7 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @UseGuards(AuthGuard)
     @UseInterceptors(AuthUserInterceptor)
-    async getCurrentUser(@AuthUser() user: UserEntity) {
+    async getCurrentUser(@AuthUser() user: UserEntity): Promise<ReadUserDto> {
         return UserService.buildUserRO(user);
     }
 }

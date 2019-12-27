@@ -13,6 +13,7 @@ import {AuthUserInterceptor} from "../../interceptors/auth-user-interceptor.serv
 import {TagService} from "./tag.service";
 import {TagCreateDto} from "./dto/tagCreate.dto";
 import {TagNotFoundException} from "../../exceptions/tag-not-found.exception";
+import {TagReadDto} from "./dto/tagReadDto";
 
 
 @Controller('tag')
@@ -23,7 +24,7 @@ export class TagController {
     }
 
     @Get(':id')
-    async getTag(@Param() params) {
+    async getTag(@Param() params): Promise<TagReadDto> {
         const tag = await this.tagService.findOne(params.id);
         if (!tag) {
             throw new TagNotFoundException();
@@ -33,7 +34,7 @@ export class TagController {
 
     @Post()
     @HttpCode(200)
-    async createTag(@Body() createDto: TagCreateDto) {
+    async createTag(@Body() createDto: TagCreateDto): Promise<TagReadDto> {
         const tag = await this.tagService.create(createDto);
         return TagService.buildTagRO(tag);
     }

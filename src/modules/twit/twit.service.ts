@@ -1,10 +1,9 @@
-import {Body, Injectable} from "@nestjs/common";
+import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {TwitEntity} from './twit.entity';
 import {TwitReadDto} from './twit/twitReadDto';
 import {TwitCreateDto} from './twit/twitCreate.dto';
-import {AuthService} from "../auth/auth.service";
 import {TwitHasTagEntity} from "./twitHasTag.entity";
 import {TagEntity} from "../tag/tag.entity";
 import {TagService} from "../tag/tag.service";
@@ -13,43 +12,39 @@ import {TwitPageOptionsDto} from "./twit/twitPageOptionsDto";
 import {TwitPageDto} from "./twit/twitPageDto";
 import {PageMetaDto} from "../../common/dto/PageMetaDto";
 import {UtilsService} from "../../providers/utils.service";
+import {TwitLikeEntity} from "./twitLike.entity";
 
 @Injectable()
 export class TwitService {
     constructor(@InjectRepository(TwitEntity) private readonly twitRepository: Repository<TwitEntity>,
                 @InjectRepository(TwitHasTagEntity) private readonly twitHasTagRepository: Repository<TwitHasTagEntity>,
+                @InjectRepository(TwitLikeEntity) private readonly twitLikeEntityRepository: Repository<TwitLikeEntity>,
                 private readonly tagService: TagService) {
     }
 
-    public async findOne(id: number, relations?: object): Promise<TwitEntity | undefined> {
-        let condition = {where: {id}};
+    public async findOne(twitID: number, relations?: string[]): Promise<TwitEntity | undefined> {
+        let condition = {where: {id: twitID}};
         if (relations) {
             condition = Object.assign({relations}, condition);
         }
         return await this.twitRepository.findOne(condition);
     }
 
-
-    public static buildTwitRO(twit: TwitEntity): TwitReadDto {
-        return new TwitReadDto(twit);
+    public extraRelations(): string[] {
+        return ["user", "twitHasTag", "twitHasTag.tag", "twitHasLike"];
     }
 
-    public async create(@Body() createDto: TwitCreateDto): Promise<TwitEntity> {
+    public async create(userID: number, createDto: TwitCreateDto): Promise<TwitEntity | undefined> {
         const newTwit: TwitEntity = new TwitEntity();
         newTwit.text = createDto.text;
-        newTwit.user = AuthService.getAuthUser();
+        newTwit.user_id = userID;
         const twit: TwitEntity = await this.twitRepository.save(newTwit);
         await this.saveTags(twit, createDto.tags);
-        const options = {where: {id: twit.id}, relations: ["user", "twitHasTag", "twitHasTag.tag"]};
-        return await this.twitRepository.findOne(options);
+        return twit;
     }
 
-    public async save(twitEntity: TwitEntity) {
-        return await this.twitRepository.save(twitEntity);
-    }
-
-    public async update(id: number, @Body() createDto: TwitCreateDto): Promise<TwitEntity> {
-        const options = {where: {id}, relations: ["user", "twitHasTag", "twitHasTag.tag"]};
+    public async update(userID: number, twitID: number, createDto: TwitCreateDto): Promise<TwitEntity | void> {
+        const options = {where: {user_id: userID, id: twitID}};
         let twit: TwitEntity = await this.twitRepository.findOne(options);
         if (!twit) {
             return;
@@ -59,10 +54,18 @@ export class TwitService {
         if (createDto.tags) {
             await this.updateTags(twit, createDto.tags);
         }
-        return await this.twitRepository.findOne(options);
+        return twit;
     }
 
-    async getTwits(pageOptionsDto: TwitPageOptionsDto): Promise<TwitPageDto> {
+    public async save(twitEntity: TwitEntity): Promise<TwitEntity> {
+        return await this.twitRepository.save(twitEntity);
+    }
+
+    public static buildTwitRO(twit: TwitEntity): TwitReadDto {
+        return new TwitReadDto(twit);
+    }
+
+    public async getTwits(pageOptionsDto: TwitPageOptionsDto): Promise<TwitPageDto> {
         const queryBuilder = this.twitRepository.createQueryBuilder('twit');
         if (pageOptionsDto.q) {
             queryBuilder.where("twit.text like :text", {text: '%' + pageOptionsDto.q + '%'})
@@ -81,7 +84,8 @@ export class TwitService {
         queryBuilder
             .leftJoinAndSelect("twit.user", "user")
             .leftJoinAndSelect("twit.twitHasTag", "twitHasTag")
-            .leftJoinAndSelect("twitHasTag.tag", "tag");
+            .leftJoinAndSelect("twitHasTag.tag", "tag")
+            .leftJoinAndSelect("twit.twitHasLike", "like");
 
         if (pageOptionsDto.tags) {
             const tagsArray = this.tagsStringToArray(pageOptionsDto.tags);
@@ -113,16 +117,7 @@ export class TwitService {
         return new TwitPageDto(twitsRead, pageMetaDto);
     }
 
-    private async updateTags(twit: TwitEntity, tags: string) {
-        await this.deleteTagsByTwit(twit);
-        await this.saveTags(twit, tags);
-    }
-
-    private async deleteTagsByTwit(twit: TwitEntity) {
-        return await this.twitHasTagRepository.delete({twit});
-    }
-
-    public async saveTags(twit: TwitEntity, tags: string) {
+    public async saveTags(twit: TwitEntity, tags: string): Promise<void> {
         const tagsArray = this.tagsStringToArray(tags);
         for (let someTag of tagsArray) {
             try {
@@ -144,7 +139,30 @@ export class TwitService {
         }
     }
 
-    private tagsStringToArray(tags: string) {
+    public async setLike(userID: number, twit: TwitEntity): Promise<void> {
+        const options = {where: {user_id: userID, id: twit.id}};
+        const twitLike = await this.twitLikeEntityRepository.findOne({where: {user_id: userID, twit_id: twit.id}});
+        if (twitLike) {
+            await this.twitLikeEntityRepository.delete(twitLike);
+            return;
+        }
+        const like = new TwitLikeEntity();
+        like.user_id = userID;
+        like.twit_id = twit.id;
+        await this.twitLikeEntityRepository.save(like);
+    }
+
+    private async updateTags(twit: TwitEntity, tags: string): Promise<void> {
+        await this.deleteTagsByTwit(twit);
+        await this.saveTags(twit, tags);
+    }
+
+    private async deleteTagsByTwit(twit: TwitEntity): Promise<void> {
+        await this.twitHasTagRepository.delete({twit});
+    }
+
+
+    private tagsStringToArray(tags: string): string[] {
         let tagsArray = tags.split(';');
         return tagsArray.filter(val => val !== '');
     }

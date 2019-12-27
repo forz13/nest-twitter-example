@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeUpdate, ManyToO
 import {UserEntity} from '../user/user.entity';
 import {TwitHasTagEntity} from './twitHasTag.entity';
 import {UtilsService} from '../../providers/utils.service'
+import {TwitLikeEntity} from "./twitLike.entity";
 
 
 @Entity('tbl_twit')
@@ -13,10 +14,13 @@ export class TwitEntity {
     @Column('varchar', {length: 280})
     text;
 
-    @Column({type: 'int', default: () => UtilsService.timestamp()})
+    @Column({type: 'int'})
+    user_id;
+
+    @Column({type: 'int'})
     create_date;
 
-    @Column({type: 'int', default: () => UtilsService.timestamp()})
+    @Column({type: 'int'})
     update_date;
 
     @BeforeUpdate()
@@ -35,5 +39,8 @@ export class TwitEntity {
 
     @OneToMany(type => TwitHasTagEntity, twitHasTags => twitHasTags.twit)
     twitHasTag: TwitHasTagEntity[];
+
+    @OneToMany(type => TwitLikeEntity, twitLike => twitLike.twit)
+    twitHasLike: TwitLikeEntity[];
 
 }
