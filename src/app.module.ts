@@ -7,6 +7,8 @@ import {ConfigService} from './shared/services/config.service';
 import {SharedModule} from './shared/shared.module';
 import {AuthModule} from "./modules/auth/auth.module";
 import {contextMiddleware} from './middlewares';
+import {AppController} from "./app.controller";
+import {AppService} from "./app.service";
 
 @Module({
     imports: [
@@ -21,6 +23,8 @@ import {contextMiddleware} from './middlewares';
         TagModule,
         AuthModule,
     ],
+    controllers: [AppController],
+    providers: [AppService],
     exports: [UserModule, TagModule, TwitModule]
 })
 
