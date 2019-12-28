@@ -26,22 +26,26 @@
 								{
 									"key": "name",
 									"value": "vasya",
+									"description": "имя пользователя",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "vasya@vasya.ru",
+									"value": "vasya@vasya.com",
+									"description": "почта пользователя",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "131313",
+									"description": "пароль пользователя",
 									"type": "text"
 								},
 								{
 									"key": "",
 									"value": "",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -56,7 +60,8 @@
 								"auth",
 								"register"
 							]
-						}
+						},
+						"description": "Регистрация пользователя"
 					},
 					"response": []
 				},
@@ -77,12 +82,14 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "vasya@vasya.ru",
+									"value": "vasya@vasya.com",
+									"description": "почта",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "131313",
+									"description": "пароль",
 									"type": "text"
 								}
 							]
@@ -98,7 +105,8 @@
 								"auth",
 								"login"
 							]
-						}
+						},
+						"description": "Авторизация пользователя\n\nВ ответ получаем AccessToken\nЕго нужно передавать во все методы,требующих авторизацию, в заголовке auth"
 					},
 					"response": []
 				},
@@ -118,7 +126,8 @@
 							},
 							{
 								"key": "auth",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs",
+								"description": "авторизационный токен",
 								"type": "text"
 							}
 						],
@@ -137,7 +146,8 @@
 								"auth",
 								"me"
 							]
-						}
+						},
+						"description": "Получить профиль текущего пользователя"
 					},
 					"response": []
 				}
@@ -162,9 +172,10 @@
 								"value": "application/x-www-form-urlencoded"
 							},
 							{
+								"description": "авторизационный токен",
 								"key": "auth",
 								"type": "text",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo"
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs"
 							}
 						],
 						"body": {
@@ -172,7 +183,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/user/profile",
+							"raw": "http://localhost:3000/user/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -180,9 +191,10 @@
 							"port": "3000",
 							"path": [
 								"user",
-								"profile"
+								"2"
 							]
-						}
+						},
+						"description": "Получить профиль указанного пользователя"
 					},
 					"response": []
 				},
@@ -194,13 +206,13 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
 							},
 							{
 								"key": "auth",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo",
-								"type": "text"
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs"
 							}
 						],
 						"body": {
@@ -208,12 +220,12 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "vasya@vasya.ru",
+									"value": "vasya@vasya.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "1123123123",
+									"value": "123123",
 									"type": "text"
 								},
 								{
@@ -233,7 +245,8 @@
 							"path": [
 								"user"
 							]
-						}
+						},
+						"description": "Обновить профиль текущего пользователя"
 					},
 					"response": []
 				}
@@ -256,7 +269,7 @@
 							},
 							{
 								"key": "auth",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs",
 								"type": "text"
 							}
 						],
@@ -265,7 +278,8 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "news",
+									"value": "asd",
+									"description": "имя тэга",
 									"type": "text"
 								}
 							]
@@ -280,7 +294,8 @@
 							"path": [
 								"tag"
 							]
-						}
+						},
+						"description": "Создать тэг"
 					},
 					"response": []
 				},
@@ -300,7 +315,7 @@
 							},
 							{
 								"key": "auth",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc3MTE5MDIyLCJleHAiOjE1NzcxNTUwMjJ9.vWixYr8dPzGg8dMmz8n3xYV_HhhQRjGMyFUnc7IUl8A",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs",
 								"type": "text"
 							}
 						],
@@ -319,7 +334,8 @@
 								"tag",
 								"1"
 							]
-						}
+						},
+						"description": "Получить тэг по id"
 					},
 					"response": []
 				}
@@ -342,7 +358,7 @@
 							},
 							{
 								"key": "auth",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs",
 								"type": "text"
 							}
 						],
@@ -352,11 +368,13 @@
 								{
 									"key": "text",
 									"value": "some twit text123",
+									"description": "текст твита",
 									"type": "text"
 								},
 								{
 									"key": "tags",
-									"value": "tag1asdasdas;taglala;tahUsjks",
+									"value": "tag1asdasdas;taglala;tahUsjks;asd",
+									"description": "тэги твита перечисленные через  ';'",
 									"type": "text"
 								}
 							]
@@ -371,7 +389,8 @@
 							"path": [
 								"twit"
 							]
-						}
+						},
+						"description": "Создать твит"
 					},
 					"response": []
 				},
@@ -389,7 +408,7 @@
 							{
 								"key": "auth",
 								"type": "text",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo"
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs"
 							}
 						],
 						"body": {
@@ -397,12 +416,14 @@
 							"urlencoded": [
 								{
 									"key": "text",
-									"value": "some twit text123",
+									"value": "some twit",
+									"description": "текст твита",
 									"type": "text"
 								},
 								{
 									"key": "tags",
-									"value": "tag1asdas;das;taglala;tahUsjks",
+									"value": "tag1",
+									"description": "тэги твита",
 									"type": "text"
 								}
 							]
@@ -418,7 +439,8 @@
 								"twit",
 								"1"
 							]
-						}
+						},
+						"description": "Обновить твит"
 					},
 					"response": []
 				},
@@ -438,7 +460,7 @@
 							},
 							{
 								"key": "auth",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTc3MTE1OTYyLCJleHAiOjE1NzcxNTE5NjJ9.K6_1p3V6YWfkFyPVgGXU3gPXG3czZc_Q1EgA25Uqhuo",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs",
 								"type": "text"
 							}
 						],
@@ -457,7 +479,8 @@
 								"twit",
 								"1"
 							]
-						}
+						},
+						"description": "Получить тэг по id"
 					},
 					"response": []
 				},
@@ -478,7 +501,7 @@
 							{
 								"key": "auth",
 								"type": "text",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc3MTE5MDIyLCJleHAiOjE1NzcxNTUwMjJ9.vWixYr8dPzGg8dMmz8n3xYV_HhhQRjGMyFUnc7IUl8A"
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs"
 							}
 						],
 						"body": {
@@ -486,7 +509,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/twit/twits?q=solid&order=ASC&page=1&take=10&create_date_start=2019-12-21T14:48:00&create_date_end=2019-12-25T14:48:00&tags=Refined Wooden Tuna;Awesome Cotton Chair",
+							"raw": "http://localhost:3000/twit/twits?q=s&order=ASC&page=1&take=10&create_date_start=2019-12-21T14:48:00&create_date_end=2019-12-31T14:48:00&tags=Refined Wooden Tuna;taglala",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -499,34 +522,86 @@
 							"query": [
 								{
 									"key": "q",
-									"value": "solid"
+									"value": "s",
+									"description": "текст твита"
 								},
 								{
 									"key": "order",
-									"value": "ASC"
+									"value": "ASC",
+									"description": "сортировка по дате создания"
 								},
 								{
 									"key": "page",
-									"value": "1"
+									"value": "1",
+									"description": "страница"
 								},
 								{
 									"key": "take",
-									"value": "10"
+									"value": "10",
+									"description": "количество записей на странице"
 								},
 								{
 									"key": "create_date_start",
-									"value": "2019-12-21T14:48:00"
+									"value": "2019-12-21T14:48:00",
+									"description": "дата создания - начало диапизона "
 								},
 								{
 									"key": "create_date_end",
-									"value": "2019-12-25T14:48:00"
+									"value": "2019-12-31T14:48:00",
+									"description": "дата создания - конец диапизона"
 								},
 								{
 									"key": "tags",
-									"value": "Refined Wooden Tuna;Awesome Cotton Chair"
+									"value": "Refined Wooden Tuna;taglala"
 								}
 							]
-						}
+						},
+						"description": "Поиск твитов"
+					},
+					"response": []
+				},
+				{
+					"name": "set like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "auth",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc3NTE2MjU4LCJleHAiOjE1Nzc1NTIyNTh9.8vzuaO-krgAXtQrZkcbzrClvyy2uBi7TYr_8BK41cZs"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3000/twit/1/like?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"twit",
+								"1",
+								"like"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "solid",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Поставить/убрать лайк у твита"
 					},
 					"response": []
 				}
