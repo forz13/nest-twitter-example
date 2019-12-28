@@ -1,7 +1,7 @@
 
 ## Common description
 
-Twitter-like api
+Twitter-like API on Nest.js
 
 
 ## Для локальной разработки
@@ -55,8 +55,9 @@ docker container exec -it 0801a4230ec0 npm run fill-db:prod
 
 ## API
 
-В корне проекта располагается postman коллекция(https://www.getpostman.com/)   
-twitter.postman_collection
+В корне проекта располагается postman коллекция(https://www.getpostman.com/) twitter.postman_collection
+
+В ней описаны все актуальные методы 
 
 ##### Авторизация
 Метод /auth/login возвращает accessToken

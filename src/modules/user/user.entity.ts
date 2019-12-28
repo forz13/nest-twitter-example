@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, CreateDateColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, Unique} from 'typeorm';
 import {IsEmail} from 'class-validator';
 import {UtilsService} from '../../providers/utils.service'
 import {TwitEntity} from '../twit/twit.entity';
@@ -6,6 +6,7 @@ import {TagSubscribersEntity} from '../tag/tagSubscribers.entity';
 import {TwitLikeEntity} from "../twit/twitLike.entity";
 
 @Entity('tbl_user')
+@Unique('tbl_user', ['email'])
 export class UserEntity {
 
     @PrimaryGeneratedColumn()

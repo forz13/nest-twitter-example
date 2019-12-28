@@ -39,7 +39,9 @@ export class TwitService {
         newTwit.text = createDto.text;
         newTwit.user_id = userID;
         const twit: TwitEntity = await this.twitRepository.save(newTwit);
-        await this.saveTags(twit, createDto.tags);
+        if (createDto.tags) {
+            await this.saveTags(twit, createDto.tags);
+        }
         return twit;
     }
 

@@ -1,6 +1,4 @@
 import {Module, MiddlewareConsumer, NestModule} from '@nestjs/common';
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
 import {UserModule} from './modules/user/user.module';
 import {TwitModule} from './modules/twit/twit.module';
 import {TagModule} from './modules/tag/tag.module';
@@ -23,8 +21,6 @@ import {contextMiddleware} from './middlewares';
         TagModule,
         AuthModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
     exports: [UserModule, TagModule, TwitModule]
 })
 

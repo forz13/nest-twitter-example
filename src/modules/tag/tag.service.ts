@@ -1,9 +1,10 @@
-import {Injectable} from "@nestjs/common";
+import {HttpStatus, Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {TagEntity} from './tag.entity';
 import {TagReadDto} from './dto/tagReadDto'
 import {TagCreateDto} from "./dto/tagCreate.dto";
+import {HttpException} from "@nestjs/common/exceptions/http.exception";
 
 @Injectable()
 export class TagService {
@@ -19,6 +20,11 @@ export class TagService {
     }
 
     public async create(createDto: TagCreateDto): Promise<TagEntity> {
+        const tag = await this.tagRepository.findOne({where: {name: createDto.name}});
+        if (tag) {
+            const errors = {username: 'Tag name must be unique.'};
+            throw new HttpException({message: 'Input data validation failed', errors}, HttpStatus.BAD_REQUEST);
+        }
         const newTag = new TagEntity();
         newTag.name = createDto.name;
         return await this.tagRepository.save(newTag);

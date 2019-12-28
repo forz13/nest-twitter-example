@@ -46,6 +46,11 @@ export class UserService {
             user.name = updateDTO.name;
         }
         if (updateDTO.email) {
+            const duplicateEmail = await this.userRepository.findOne({where: {email: updateDTO.email}});
+            if (duplicateEmail && duplicateEmail.id !== userID) {
+                const errors = {username: 'Email must be unique.'};
+                throw new HttpException({message: 'Input data validation failed', errors}, HttpStatus.BAD_REQUEST);
+            }
             user.email = updateDTO.email;
         }
         if (updateDTO.password) {

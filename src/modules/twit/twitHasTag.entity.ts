@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeUpdate, ManyToOne, BeforeInsert,JoinTable} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeUpdate, ManyToOne, BeforeInsert} from 'typeorm';
 import {TagEntity} from '../tag/tag.entity';
 import {TwitEntity} from './twit.entity';
 import {UtilsService} from '../../providers/utils.service'

@@ -1,5 +1,5 @@
-import { NamingStrategyInterface, DefaultNamingStrategy } from 'typeorm';
-import { snakeCase } from 'typeorm/util/StringUtils';
+import {NamingStrategyInterface, DefaultNamingStrategy} from 'typeorm';
+import {snakeCase} from 'typeorm/util/StringUtils';
 
 export class SnakeNamingStrategy extends DefaultNamingStrategy
     implements NamingStrategyInterface {
@@ -34,10 +34,10 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy
     ): string {
         return snakeCase(
             firstTableName +
-                '_' +
-                firstPropertyName.replace(/\./gi, '_') +
-                '_' +
-                secondTableName,
+            '_' +
+            firstPropertyName.replace(/\./gi, '_') +
+            '_' +
+            secondTableName,
         );
     }
 

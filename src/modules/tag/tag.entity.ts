@@ -1,9 +1,10 @@
-import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique} from 'typeorm';
 import {UtilsService} from '../../providers/utils.service';
 import {TwitHasTagEntity} from '../twit/twitHasTag.entity';
 import {TagSubscribersEntity} from './tagSubscribers.entity';
 
 @Entity('tbl_tag')
+@Unique('tbl_tag', ['name'])
 export class TagEntity {
 
     @PrimaryGeneratedColumn()
