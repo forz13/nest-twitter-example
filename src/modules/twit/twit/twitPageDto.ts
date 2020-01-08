@@ -2,7 +2,6 @@ import { TwitReadDto } from './twitReadDto';
 import { PageMetaDto } from '../../../common/dto/PageMetaDto';
 
 export class TwitPageDto {
-
     readonly data: TwitReadDto[];
 
     readonly meta: PageMetaDto;

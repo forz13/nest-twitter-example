@@ -85,7 +85,7 @@ module.exports = {
             'error',
             'as-needed',
         ],
-        'camelcase': 'error',
+        'camelcase': 'off',
         'complexity': 'off',
         'constructor-super': 'error',
         'curly': 'error',
@@ -111,6 +111,7 @@ module.exports = {
             },
         ],
         'new-parens': 'error',
+
         'no-bitwise': 'error',
         'no-caller': 'error',
         'no-cond-assign': 'error',
@@ -180,7 +181,7 @@ module.exports = {
         'no-var': 'error',
         'object-shorthand': 'error',
         'prefer-const': 'error',
-        'prefer-object-spread': 'error',
+        'prefer-object-spread': 'off',
         'quote-props': [
             'error',
             'consistent-as-needed',
@@ -205,6 +206,7 @@ module.exports = {
                     './node_modules/tslint-consistent-codestyle/rules',
                 ],
                 'rules': {
+                    'object-shorthand-properties-first': false,
                     'align': [
                         true,
                         'parameters',
@@ -219,67 +221,6 @@ module.exports = {
                     'jsdoc-format': [
                         true,
                         'check-multiline-start',
-                    ],
-                    'naming-convention': [
-                        true,
-                        {
-                            'type': 'default',
-                            'format': 'camelCase',
-                            'leadingUnderscore': 'forbid',
-                            'trailingUnderscore': 'forbid',
-                        },
-                        {
-                            'type': 'variable',
-                            'modifiers': [
-                                'global',
-                                'const',
-                            ],
-                            'format': [
-                                'camelCase',
-                                'PascalCase',
-                                'UPPER_CASE',
-                            ],
-                        },
-                        {
-                            'type': 'parameter',
-                            'modifiers': 'unused',
-                            'leadingUnderscore': 'allow',
-                        },
-                        {
-                            'type': 'member',
-                            'modifiers': 'private',
-                            'leadingUnderscore': 'require',
-                        },
-                        {
-                            'type': 'member',
-                            'modifiers': 'protected',
-                            'leadingUnderscore': 'require',
-                        },
-                        {
-                            'type': 'property',
-                            'modifiers': [
-                                'public',
-                                'static',
-                                'const',
-                            ],
-                            'format': 'UPPER_CASE',
-                        },
-                        {
-                            'type': 'type',
-                            'format': 'PascalCase',
-                        },
-                        {
-                            'type': 'interface',
-                            'prefix': 'I',
-                        },
-                        {
-                            'type': 'genericTypeParameter',
-                            'regex': '^[A-Z]$',
-                        },
-                        {
-                            'type': 'enumMember',
-                            'format': 'UPPER_CASE',
-                        },
                     ],
                     'no-accessor-recursion': true,
                     'no-as-type-assertion': true,
@@ -296,7 +237,6 @@ module.exports = {
                     'no-unnecessary-type-annotation': true,
                     'no-var-before-return': true,
                     'number-literal-format': true,
-                    'object-shorthand-properties-first': true,
                     'one-line': [
                         true,
                         'check-open-brace',

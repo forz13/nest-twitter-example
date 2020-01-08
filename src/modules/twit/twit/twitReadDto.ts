@@ -1,12 +1,12 @@
-import {TwitEntity} from "../twit.entity";
+import { TwitEntity } from '../twit.entity';
 
 export class TwitReadDto {
     id: number;
     text: string;
     create_date: number;
     update_date: number;
-    user: { id: number, name: string };
-    tags: { tag_id: number, name: string }[] = [];
+    user: { id: number; name: string };
+    tags: { tag_id: number; name: string }[] = [];
     likes: { user_id: number }[] = [];
 
     constructor(twit: TwitEntity) {
@@ -30,9 +30,12 @@ export class TwitReadDto {
 
     private setTags(twit: TwitEntity) {
         if (twit.twitHasTag && twit.twitHasTag.length) {
-            for (let twitTag of twit.twitHasTag) {
+            for (const twitTag of twit.twitHasTag) {
                 if (twitTag.tag) {
-                    this.tags.push({tag_id: twitTag.tag.id, name: twitTag.tag.name});
+                    this.tags.push({
+                        tag_id: twitTag.tag.id,
+                        name: twitTag.tag.name,
+                    });
                 }
             }
         }
@@ -40,8 +43,8 @@ export class TwitReadDto {
 
     private setLikes(twit: TwitEntity) {
         if (twit.twitHasLike && twit.twitHasLike.length) {
-            for (let twitLike of twit.twitHasLike) {
-                this.likes.push({user_id: twitLike.user_id});
+            for (const twitLike of twit.twitHasLike) {
+                this.likes.push({ user_id: twitLike.user_id });
             }
         }
     }

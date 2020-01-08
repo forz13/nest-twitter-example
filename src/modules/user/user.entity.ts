@@ -1,31 +1,38 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, Unique} from 'typeorm';
-import {IsEmail} from 'class-validator';
-import {UtilsService} from '../../providers/utils.service'
-import {TwitEntity} from '../twit/twit.entity';
-import {TagSubscribersEntity} from '../tag/tagSubscribers.entity';
-import {TwitLikeEntity} from "../twit/twitLike.entity";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    BeforeInsert,
+    BeforeUpdate,
+    OneToMany,
+    Unique,
+} from 'typeorm';
+import { IsEmail } from 'class-validator';
+import { UtilsService } from '../../providers/utils.service';
+import { TwitEntity } from '../twit/twit.entity';
+import { TagSubscribersEntity } from '../tag/tagSubscribers.entity';
+import { TwitLikeEntity } from '../twit/twitLike.entity';
 
 @Entity('tbl_user')
 @Unique('tbl_user', ['email'])
 export class UserEntity {
-
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('varchar', {length: 100})
+    @Column('varchar', { length: 100 })
     name: string;
 
-    @Column('varchar', {length: 100})
+    @Column('varchar', { length: 100 })
     @IsEmail()
     email: string;
 
-    @Column('varchar', {length: 200})
+    @Column('varchar', { length: 200 })
     password: string;
 
-    @Column({type: 'int'})
+    @Column({ type: 'int' })
     create_date: number;
 
-    @Column({type: 'int'})
+    @Column({ type: 'int' })
     update_date: number;
 
     @BeforeInsert()
@@ -39,12 +46,21 @@ export class UserEntity {
         this.update_date = UtilsService.timestamp();
     }
 
-    @OneToMany(type => TwitEntity, twit => twit.user)
+    @OneToMany(
+        type => TwitEntity,
+        twit => twit.user,
+    )
     twits: TwitEntity[];
 
-    @OneToMany(type => TagSubscribersEntity, tagSubscribers => tagSubscribers.user)
+    @OneToMany(
+        type => TagSubscribersEntity,
+        tagSubscribers => tagSubscribers.user,
+    )
     tagSubscribers: TagSubscribersEntity[];
 
-    @OneToMany(type => TwitLikeEntity, twitLike => twitLike.user)
+    @OneToMany(
+        type => TwitLikeEntity,
+        twitLike => twitLike.user,
+    )
     likes: TwitLikeEntity[];
 }

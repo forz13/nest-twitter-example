@@ -1,9 +1,8 @@
-import {NestFactory} from '@nestjs/core';
-import {ValidationPipe} from '@nestjs/common';
-import {AppModule} from './app.module';
-import {SharedModule} from './shared/shared.module';
-import {ConfigService} from './shared/services/config.service';
-
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { AppModule } from './app.module';
+import { SharedModule } from './shared/shared.module';
+import { ConfigService } from './shared/services/config.service';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);

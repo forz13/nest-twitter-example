@@ -1,11 +1,8 @@
-import {Module, Global, HttpModule} from '@nestjs/common';
-import {JwtModule} from '@nestjs/jwt';
-import {ConfigService} from './services/config.service';
+import { Module, Global, HttpModule } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from './services/config.service';
 
-const providers = [
-    ConfigService,
-
-];
+const providers = [ConfigService];
 
 @Global()
 @Module({
@@ -25,5 +22,4 @@ const providers = [
     ],
     exports: [...providers, HttpModule, JwtModule],
 })
-export class SharedModule {
-}
+export class SharedModule {}

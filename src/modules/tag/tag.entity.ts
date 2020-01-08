@@ -1,22 +1,29 @@
-import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique} from 'typeorm';
-import {UtilsService} from '../../providers/utils.service';
-import {TwitHasTagEntity} from '../twit/twitHasTag.entity';
-import {TagSubscribersEntity} from './tagSubscribers.entity';
+import {
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    Unique,
+} from 'typeorm';
+import { UtilsService } from '../../providers/utils.service';
+import { TwitHasTagEntity } from '../twit/twitHasTag.entity';
+import { TagSubscribersEntity } from './tagSubscribers.entity';
 
 @Entity('tbl_tag')
 @Unique('tbl_tag', ['name'])
 export class TagEntity {
-
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('varchar', {length: 20})
+    @Column('varchar', { length: 20 })
     name: string;
 
-    @Column({type: 'int'})
+    @Column({ type: 'int' })
     create_date: number;
 
-    @Column({type: 'int'})
+    @Column({ type: 'int' })
     update_date: number;
 
     @BeforeUpdate()
@@ -30,9 +37,15 @@ export class TagEntity {
         this.create_date = UtilsService.timestamp();
     }
 
-    @OneToMany(type => TwitHasTagEntity, twitHasTag => twitHasTag.tag)
+    @OneToMany(
+        () => TwitHasTagEntity,
+        twitHasTag => twitHasTag.tag,
+    )
     twitHasTag: TwitHasTagEntity[];
 
-    @OneToMany(type => TagSubscribersEntity, tagSubscribers => tagSubscribers.tag)
+    @OneToMany(
+        () => TagSubscribersEntity,
+        tagSubscribers => tagSubscribers.tag,
+    )
     tagSubscribers: TagSubscribersEntity[];
 }

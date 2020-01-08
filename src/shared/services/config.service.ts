@@ -1,19 +1,17 @@
 import * as dotenv from 'dotenv';
-import {TypeOrmModuleOptions} from '@nestjs/typeorm';
-import {SnakeNamingStrategy} from "../../snake-naming.strategy";
-
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 
 export class ConfigService {
     constructor() {
         const nodeEnv = this.nodeEnv;
         dotenv.config({
-            path: `.env`,
+            path: '.env',
         });
 
         for (const envName of Object.keys(process.env)) {
             process.env[envName] = process.env[envName].replace(/\\n/g, '\n');
         }
-
     }
 
     public get(key: string): string {
@@ -66,7 +64,7 @@ export class ConfigService {
             database: this.get('MYSQL_DATABASE'),
             migrationsRun: false,
             synchronize: true,
-            namingStrategy: new SnakeNamingStrategy()
+            namingStrategy: new SnakeNamingStrategy(),
         };
     }
 }
