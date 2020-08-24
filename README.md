@@ -6,7 +6,7 @@ Twitter-like API on Nest.js
 
 ## Для локальной разработки
 
-- Node.js>=v10.x
+- Node.js>=v12.13.x
 
 - MySQL>=v5.7.x
 
@@ -55,7 +55,7 @@ docker container exec -it 0801a4230ec0 npm run fill-db:prod
 
 ## API
 
-В корне проекта располагается postman коллекция(https://www.getpostman.com/) twitter.postman_collection
+В папке /doc располагается postman коллекция(https://www.getpostman.com/) twitter.postman_collection
 
 В ней описаны все актуальные методы 
 

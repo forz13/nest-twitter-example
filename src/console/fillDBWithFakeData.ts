@@ -23,7 +23,8 @@ import { UserEntity } from '../modules/user/user.entity';
     const userEntity = new UserEntity();
     userEntity.id = user.id;
     const countTwits = Array(100);
-    for (const i of countTwits) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const ignored of countTwits) {
         try {
             const twit = new TwitEntity();
             twit.text = faker.hacker.phrase();
@@ -31,9 +32,9 @@ import { UserEntity } from '../modules/user/user.entity';
             const savedTwit = await twitService.save(twit);
             const tags = [];
             const countTags = Array(4);
-            for (const i of countTags) {
+            countTags.forEach(() => {
                 tags.push(faker.commerce.productName());
-            }
+            });
             await twitService.saveTags(savedTwit, tags.join(';'));
         } catch (err) {
             console.log(`save error : ${err.message}`);

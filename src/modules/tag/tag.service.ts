@@ -27,10 +27,7 @@ export class TagService {
         });
         if (tag) {
             const errors = { username: 'Tag name must be unique.' };
-            throw new HttpException(
-                { message: 'Input data validation failed', errors },
-                HttpStatus.BAD_REQUEST,
-            );
+            throw new HttpException({ message: 'Input data validation failed', errors }, HttpStatus.BAD_REQUEST);
         }
         const newTag = new TagEntity();
         newTag.name = createDto.name;

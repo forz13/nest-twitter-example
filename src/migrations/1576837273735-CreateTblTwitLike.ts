@@ -1,9 +1,4 @@
-import {
-    MigrationInterface,
-    QueryRunner,
-    Table,
-    TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
 export class CreateTblTwitLike1576837273735 implements MigrationInterface {
     private static tblName = 'tbl_twit_like';

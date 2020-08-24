@@ -33,10 +33,7 @@ export class UserService {
         });
         if (duplicateEmail.length) {
             const errors = { username: 'Email must be unique.' };
-            throw new HttpException(
-                { message: 'Input data validation failed', errors },
-                HttpStatus.BAD_REQUEST,
-            );
+            throw new HttpException({ message: 'Input data validation failed', errors }, HttpStatus.BAD_REQUEST);
         }
         const newUser = new UserEntity();
         newUser.name = name;
@@ -46,10 +43,7 @@ export class UserService {
         return this.userRepository.save(newUser);
     }
 
-    public async updateProfile(
-        userID: number,
-        updateDTO: UserUpdateProfileDto,
-    ): Promise<UserEntity> {
+    public async updateProfile(userID: number, updateDTO: UserUpdateProfileDto): Promise<UserEntity> {
         const user = await this.findOne(userID);
         if (updateDTO.name) {
             user.name = updateDTO.name;
@@ -60,10 +54,7 @@ export class UserService {
             });
             if (duplicateEmail && duplicateEmail.id !== userID) {
                 const errors = { username: 'Email must be unique.' };
-                throw new HttpException(
-                    { message: 'Input data validation failed', errors },
-                    HttpStatus.BAD_REQUEST,
-                );
+                throw new HttpException({ message: 'Input data validation failed', errors }, HttpStatus.BAD_REQUEST);
             }
             user.email = updateDTO.email;
         }
@@ -79,21 +70,12 @@ export class UserService {
     }
 
     private generatePassword(pass: string, salt): string {
-        return crypto
-            .createHmac('sha256', salt)
-            .update(pass)
-            .digest('hex');
+        return crypto.createHmac('sha256', salt).update(pass).digest('hex');
     }
 
-    public async authenticate(
-        email: string,
-        password: string,
-    ): Promise<UserEntity | undefined> {
+    public async authenticate(email: string, password: string): Promise<UserEntity | undefined> {
         const user = await this.userRepository.findOne({ where: { email } });
-        const passHash = crypto
-            .createHmac('sha256', this.passwordSalt)
-            .update(password)
-            .digest('hex');
+        const passHash = crypto.createHmac('sha256', this.passwordSalt).update(password).digest('hex');
         if (user && user.password === passHash) {
             delete user.password;
             return user;

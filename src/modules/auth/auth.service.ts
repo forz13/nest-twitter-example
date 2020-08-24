@@ -26,10 +26,7 @@ export class AuthService {
     }
 
     async validateUser(userLoginDto: UserLoginDto): Promise<UserEntity> {
-        const user = await this.userService.authenticate(
-            userLoginDto.email,
-            userLoginDto.password,
-        );
+        const user = await this.userService.authenticate(userLoginDto.email, userLoginDto.password);
         if (!user) {
             throw new UserNotFoundException();
         }

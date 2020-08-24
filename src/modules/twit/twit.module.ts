@@ -8,14 +8,7 @@ import { TagModule } from '../tag/tag.module';
 import { TwitLikeEntity } from './twitLike.entity';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([
-            TwitEntity,
-            TwitHasTagEntity,
-            TwitLikeEntity,
-        ]),
-        TagModule,
-    ],
+    imports: [TypeOrmModule.forFeature([TwitEntity, TwitHasTagEntity, TwitLikeEntity]), TagModule],
     controllers: [TwitController],
     providers: [TwitService],
     exports: [TwitService],

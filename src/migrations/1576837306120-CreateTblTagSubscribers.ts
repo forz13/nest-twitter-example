@@ -1,12 +1,6 @@
-import {
-    MigrationInterface,
-    QueryRunner,
-    Table,
-    TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
-export class CreateTblTagSubscribers1576837306120
-    implements MigrationInterface {
+export class CreateTblTagSubscribers1576837306120 implements MigrationInterface {
     private static tblName = 'tbl_tag_subscribers';
 
     public async up(queryRunner: QueryRunner): Promise<any> {
@@ -69,8 +63,6 @@ export class CreateTblTagSubscribers1576837306120
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.dropTable(
-            CreateTblTagSubscribers1576837306120.tblName,
-        );
+        await queryRunner.dropTable(CreateTblTagSubscribers1576837306120.tblName);
     }
 }

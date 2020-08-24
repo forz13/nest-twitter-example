@@ -1,13 +1,4 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    HttpCode,
-    UseGuards,
-    UseInterceptors,
-    Param,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpCode, UseGuards, UseInterceptors, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserEntity } from './user.entity';
 import { AuthGuard } from '../../guards/auth.guard';
@@ -33,14 +24,8 @@ export class UserController {
 
     @Post()
     @HttpCode(200)
-    async updateProfile(
-        @AuthUser() user: UserEntity,
-        @Body() updateDTO: UserUpdateProfileDto,
-    ) {
-        const savedUser = await this.userService.updateProfile(
-            user.id,
-            updateDTO,
-        );
+    async updateProfile(@AuthUser() user: UserEntity, @Body() updateDTO: UserUpdateProfileDto) {
+        const savedUser = await this.userService.updateProfile(user.id, updateDTO);
         return UserService.buildUserRO(savedUser);
     }
 }

@@ -1,12 +1,4 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    OneToMany,
-    BeforeUpdate,
-    ManyToOne,
-    BeforeInsert,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeUpdate, ManyToOne, BeforeInsert } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
 import { TwitHasTagEntity } from './twitHasTag.entity';
 import { UtilsService } from '../../providers/utils.service';
@@ -40,21 +32,12 @@ export class TwitEntity {
         this.create_date = UtilsService.timestamp();
     }
 
-    @ManyToOne(
-        type => UserEntity,
-        user => user.twits,
-    )
+    @ManyToOne(type => UserEntity, user => user.twits)
     user: UserEntity;
 
-    @OneToMany(
-        type => TwitHasTagEntity,
-        twitHasTags => twitHasTags.twit,
-    )
+    @OneToMany(type => TwitHasTagEntity, twitHasTags => twitHasTags.twit)
     twitHasTag: TwitHasTagEntity[];
 
-    @OneToMany(
-        type => TwitLikeEntity,
-        twitLike => twitLike.twit,
-    )
+    @OneToMany(type => TwitLikeEntity, twitLike => twitLike.twit)
     twitHasLike: TwitLikeEntity[];
 }

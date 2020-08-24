@@ -1,61 +1,51 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
 const path = require('path');
 
 module.exports = {
-    'env': {
-        'browser': true,
-        'es6': true,
-        'node': true,
+    env: {
+        browser: true,
+        es6: true,
+        node: true,
     },
-    'parser': '@typescript-eslint/parser',
-    'parserOptions': {
-        'project': path.resolve(__dirname, "./tsconfig.json"),
-        'sourceType': 'module',
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        project: path.resolve(__dirname, './tsconfig.json'),
+        sourceType: 'module',
+        createDefaultProgram: true,
     },
-    extends: [
-        'plugin:import/errors',
-        'plugin:import/warnings',
-        'plugin:import/typescript',
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended"
-    ],
-    'plugins': [
-        '@typescript-eslint',
-        '@typescript-eslint/tslint',
-        'prettier',
-    ],
-    'rules': {
-        '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+    extends: ['plugin:import/warnings', 'plugin:import/typescript', 'prettier/@typescript-eslint', 'plugin:prettier/recommended'],
+    plugins: ['@typescript-eslint', '@typescript-eslint/tslint', 'prettier'],
+    rules: {
+        '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         '@typescript-eslint/adjacent-overload-signatures': 'error',
         '@typescript-eslint/array-type': 'error',
         '@typescript-eslint/ban-types': 'error',
-        '@typescript-eslint/class-name-casing': 'error',
         '@typescript-eslint/explicit-member-accessibility': [
             'off',
             {
-                'overrides': {
-                    'constructors': 'off',
+                overrides: {
+                    constructors: 'off',
                 },
             },
         ],
         '@typescript-eslint/indent': 'off',
-        '@typescript-eslint/interface-name-prefix': 'error',
         '@typescript-eslint/member-delimiter-style': [
             'error',
             {
-                'multiline': {
-                    'delimiter': 'semi',
-                    'requireLast': true,
+                multiline: {
+                    delimiter: 'semi',
+                    requireLast: true,
                 },
-                'singleline': {
-                    'delimiter': 'semi',
-                    'requireLast': false,
+                singleline: {
+                    delimiter: 'semi',
+                    requireLast: false,
                 },
             },
         ],
         '@typescript-eslint/member-ordering': 'off',
         '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
-        '@typescript-eslint/no-empty-function': 'error',
-        '@typescript-eslint/no-empty-interface': 'error',
+        '@typescript-eslint/no-empty-function': 'warn',
+        '@typescript-eslint/no-empty-interface': 'warn',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-inferrable-types': 'error',
         '@typescript-eslint/no-misused-new': 'error',
@@ -71,43 +61,31 @@ module.exports = {
             'error',
             'single',
             {
-                'avoidEscape': true,
+                avoidEscape: true,
             },
         ],
-        '@typescript-eslint/semi': [
-            'error',
-            'always',
-        ],
+        '@typescript-eslint/semi': ['error', 'always'],
         '@typescript-eslint/type-annotation-spacing': 'error',
         '@typescript-eslint/unified-signatures': 'error',
         'arrow-body-style': 'error',
-        'arrow-parens': [
-            'error',
-            'as-needed',
-        ],
+        'arrow-parens': ['error', 'as-needed'],
         'camelcase': 'off',
         'complexity': 'off',
         'constructor-super': 'error',
         'curly': 'error',
-        'dot-notation': 'error',
+        'dot-notation': 'off',
         'eol-last': 'error',
-        'eqeqeq': [
-            'error',
-            'smart',
-        ],
-        'guard-for-in': 'error',
+        'eqeqeq': ['error', 'smart'],
+        'guard-for-in': 'off',
         'id-match': 'error',
         'import/no-default-export': 'error',
         'import/no-internal-modules': 'off',
         'import/order': 'off',
-        'max-classes-per-file': [
-            'error',
-            1,
-        ],
+        'max-classes-per-file': ['error', 10],
         'max-len': [
             'error',
             {
-                'code': 150,
+                code: 130,
             },
         ],
         'new-parens': 'error',
@@ -115,39 +93,11 @@ module.exports = {
         'no-bitwise': 'error',
         'no-caller': 'error',
         'no-cond-assign': 'error',
-        'no-console': [
-            'error',
-            {
-                'allow': [
-                    'info',
-                    'dirxml',
-                    'warn',
-                    'error',
-                    'dir',
-                    'timeLog',
-                    'assert',
-                    'clear',
-                    'count',
-                    'countReset',
-                    'group',
-                    'groupCollapsed',
-                    'groupEnd',
-                    'table',
-                    'Console',
-                    'markTimeline',
-                    'profile',
-                    'profileEnd',
-                    'timeline',
-                    'timelineEnd',
-                    'timeStamp',
-                    'context',
-                ],
-            },
-        ],
+        'no-console': 'off',
         'no-debugger': 'error',
         'no-duplicate-case': 'error',
         'no-duplicate-imports': 'error',
-        'no-empty': 'error',
+        'no-empty': 'warn',
         'no-eval': 'error',
         'no-extra-bind': 'error',
         'no-fallthrough': 'error',
@@ -156,7 +106,7 @@ module.exports = {
         'no-multiple-empty-lines': [
             'error',
             {
-                'max': 1,
+                max: 1,
             },
         ],
         'no-new-func': 'error',
@@ -164,12 +114,7 @@ module.exports = {
         'no-redeclare': 'error',
         'no-return-await': 'error',
         'no-sequences': 'error',
-        'no-shadow': [
-            'error',
-            {
-                'hoist': 'all',
-            },
-        ],
+        'no-shadow': 'off',
         'no-sparse-arrays': 'error',
         'no-template-curly-in-string': 'error',
         'no-throw-literal': 'error',
@@ -182,17 +127,14 @@ module.exports = {
         'object-shorthand': 'error',
         'prefer-const': 'error',
         'prefer-object-spread': 'off',
-        'quote-props': [
-            'error',
-            'consistent-as-needed',
-        ],
+        'quote-props': ['error', 'consistent-as-needed'],
         'radix': 'error',
         'space-before-function-paren': [
             'error',
             {
-                'anonymous': 'never',
-                'named': 'never',
-                'asyncArrow': 'always',
+                anonymous: 'never',
+                named: 'never',
+                asyncArrow: 'always',
             },
         ],
         'use-isnan': 'error',
@@ -200,56 +142,31 @@ module.exports = {
         '@typescript-eslint/tslint/config': [
             'error',
             {
-                'rulesDirectory': [
+                rulesDirectory: [
                     './node_modules/tslint-eslint-rules/dist/rules',
                     './node_modules/tslint-config-prettier/lib',
                     './node_modules/tslint-consistent-codestyle/rules',
                 ],
-                'rules': {
+                rules: {
                     'object-shorthand-properties-first': false,
-                    'align': [
-                        true,
-                        'parameters',
-                        'statements',
-                        'members',
-                    ],
-                    'comment-format': [
-                        true,
-                        'check-space',
-                    ],
+                    'align': [true, 'parameters', 'statements', 'members'],
+                    'comment-format': [true, 'check-space'],
                     'import-spacing': true,
-                    'jsdoc-format': [
-                        true,
-                        'check-multiline-start',
-                    ],
+                    'jsdoc-format': [true, 'check-multiline-start'],
                     'no-accessor-recursion': true,
                     'no-as-type-assertion': true,
                     'no-collapsible-if': true,
                     'no-implicit-dependencies': true,
                     'no-multi-spaces': true,
                     'no-reference-import': true,
-                    'no-return-undefined': [
-                        true,
-                        'allow-void-expression',
-                    ],
+                    'no-return-undefined': [true, 'allow-void-expression'],
                     'no-unnecessary-callback-wrapper': true,
                     'no-unnecessary-else': true,
                     'no-unnecessary-type-annotation': true,
                     'no-var-before-return': true,
                     'number-literal-format': true,
-                    'one-line': [
-                        true,
-                        'check-open-brace',
-                        'check-catch',
-                        'check-else',
-                        'check-finally',
-                        'check-whitespace',
-                    ],
-                    'parameter-properties': [
-                        true,
-                        'leading',
-                        'member-access',
-                    ],
+                    'one-line': [true, 'check-open-brace', 'check-catch', 'check-else', 'check-finally', 'check-whitespace'],
+                    'parameter-properties': [true, 'leading', 'member-access'],
                     'prefer-conditional-expression': true,
                     'prefer-const-enum': true,
                     'prefer-switch': [
@@ -263,8 +180,8 @@ module.exports = {
                     'trailing-comma': [
                         true,
                         {
-                            'singleline': 'never',
-                            'multiline': 'always',
+                            singleline: 'never',
+                            multiline: 'always',
                         },
                     ],
                     'whitespace': [

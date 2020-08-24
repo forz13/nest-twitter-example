@@ -31,21 +31,13 @@ export class ConfigService {
         let migrations = [__dirname + '/../../migrations/*{.ts,.js}'];
 
         if ((<any>module).hot) {
-            const entityContext = (<any>require).context(
-                './../../modules',
-                true,
-                /\.entity\.ts$/,
-            );
+            const entityContext = (<any>require).context('./../../modules', true, /\.entity\.ts$/);
             entities = entityContext.keys().map(id => {
                 const entityModule = entityContext(id);
                 const [entity] = Object.values(entityModule);
                 return entity;
             });
-            const migrationContext = (<any>require).context(
-                './../../migrations',
-                false,
-                /\.ts$/,
-            );
+            const migrationContext = (<any>require).context('./../../migrations', false, /\.ts$/);
             migrations = migrationContext.keys().map(id => {
                 const migrationModule = migrationContext(id);
                 const [migration] = Object.values(migrationModule);

@@ -26,10 +26,7 @@ export class TwitService {
         private readonly tagService: TagService,
     ) {}
 
-    public async findOne(
-        twitID: number,
-        relations?: string[],
-    ): Promise<TwitEntity | undefined> {
+    public async findOne(twitID: number, relations?: string[]): Promise<TwitEntity | undefined> {
         let condition = { where: { id: twitID } };
         if (relations) {
             condition = Object.assign({ relations }, condition);
@@ -41,10 +38,7 @@ export class TwitService {
         return ['user', 'twitHasTag', 'twitHasTag.tag', 'twitHasLike'];
     }
 
-    public async create(
-        userID: number,
-        createDto: TwitCreateDto,
-    ): Promise<TwitEntity | undefined> {
+    public async create(userID: number, createDto: TwitCreateDto): Promise<TwitEntity | undefined> {
         const newTwit = new TwitEntity();
         newTwit.text = createDto.text;
         newTwit.user_id = userID;
@@ -55,11 +49,7 @@ export class TwitService {
         return twit;
     }
 
-    public async update(
-        userID: number,
-        twitID: number,
-        createDto: TwitCreateDto,
-    ): Promise<TwitEntity | void> {
+    public async update(userID: number, twitID: number, createDto: TwitCreateDto): Promise<TwitEntity | void> {
         const options = { where: { user_id: userID, id: twitID } };
         let twit = await this.twitRepository.findOne(options);
         if (!twit) {
@@ -81,9 +71,7 @@ export class TwitService {
         return new TwitReadDto(twit);
     }
 
-    public async getTwits(
-        pageOptionsDto: TwitPageOptionsDto,
-    ): Promise<TwitPageDto> {
+    public async getTwits(pageOptionsDto: TwitPageOptionsDto): Promise<TwitPageDto> {
         const queryBuilder = this.twitRepository.createQueryBuilder('twit');
         if (pageOptionsDto.q) {
             queryBuilder.where('twit.text like :text', {
@@ -92,18 +80,14 @@ export class TwitService {
         }
 
         if (pageOptionsDto.create_date_start) {
-            const createStartTimestamp = UtilsService.dateStringToUnixTimestamp(
-                pageOptionsDto.create_date_start,
-            );
+            const createStartTimestamp = UtilsService.dateStringToUnixTimestamp(pageOptionsDto.create_date_start);
             queryBuilder.andWhere('twit.create_date >= :createStartTimestamp', {
                 createStartTimestamp,
             });
         }
 
         if (pageOptionsDto.create_date_end) {
-            const createEndTimestamp = UtilsService.dateStringToUnixTimestamp(
-                pageOptionsDto.create_date_end,
-            );
+            const createEndTimestamp = UtilsService.dateStringToUnixTimestamp(pageOptionsDto.create_date_end);
             queryBuilder.andWhere('twit.create_date <= :createEndTimestamp', {
                 createEndTimestamp,
             });
@@ -124,10 +108,7 @@ export class TwitService {
             queryBuilder.orderBy('twit.create_date', pageOptionsDto.order);
         }
 
-        const builder = queryBuilder
-            .skip(pageOptionsDto.skip)
-            .take(pageOptionsDto.take)
-            .getManyAndCount();
+        const builder = queryBuilder.skip(pageOptionsDto.skip).take(pageOptionsDto.take).getManyAndCount();
 
         const [twits, twitsCount] = await builder;
 

@@ -1,12 +1,4 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    BeforeInsert,
-    BeforeUpdate,
-    OneToMany,
-    Unique,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, Unique } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import { UtilsService } from '../../providers/utils.service';
 import { TwitEntity } from '../twit/twit.entity';
@@ -46,21 +38,12 @@ export class UserEntity {
         this.update_date = UtilsService.timestamp();
     }
 
-    @OneToMany(
-        type => TwitEntity,
-        twit => twit.user,
-    )
+    @OneToMany(type => TwitEntity, twit => twit.user)
     twits: TwitEntity[];
 
-    @OneToMany(
-        type => TagSubscribersEntity,
-        tagSubscribers => tagSubscribers.user,
-    )
+    @OneToMany(type => TagSubscribersEntity, tagSubscribers => tagSubscribers.user)
     tagSubscribers: TagSubscribersEntity[];
 
-    @OneToMany(
-        type => TwitLikeEntity,
-        twitLike => twitLike.user,
-    )
+    @OneToMany(type => TwitLikeEntity, twitLike => twitLike.user)
     likes: TwitLikeEntity[];
 }

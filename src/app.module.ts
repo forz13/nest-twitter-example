@@ -14,8 +14,7 @@ import { AppService } from './app.service';
     imports: [
         TypeOrmModule.forRootAsync({
             imports: [SharedModule],
-            useFactory: (configService: ConfigService) =>
-                configService.typeOrmConfig,
+            useFactory: (configService: ConfigService) => configService.typeOrmConfig,
             inject: [ConfigService],
         }),
         UserModule,

@@ -1,10 +1,4 @@
-import {
-    BeforeUpdate,
-    Column,
-    Entity,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TagEntity } from './tag.entity';
 import { UserEntity } from '../user/user.entity';
 import { UtilsService } from '../../providers/utils.service';
@@ -31,15 +25,9 @@ export class TagSubscribersEntity {
         this.update_date = UtilsService.timestamp();
     }
 
-    @ManyToOne(
-        type => TagEntity,
-        tag => tag.tagSubscribers,
-    )
+    @ManyToOne(type => TagEntity, tag => tag.tagSubscribers)
     tag: TagEntity;
 
-    @ManyToOne(
-        type => UserEntity,
-        user => user.tagSubscribers,
-    )
+    @ManyToOne(type => UserEntity, user => user.tagSubscribers)
     user: UserEntity;
 }

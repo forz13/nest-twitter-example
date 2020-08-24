@@ -1,13 +1,4 @@
-import {
-    Controller,
-    Post,
-    Body,
-    HttpCode,
-    HttpStatus,
-    Get,
-    UseGuards,
-    UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, UseGuards, UseInterceptors } from '@nestjs/common';
 
 import { AuthUser } from '../../decorators/auth-user.decorator';
 import { UserService } from '../user/user.service';
@@ -22,25 +13,18 @@ import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.se
 
 @Controller('auth')
 export class AuthController {
-    constructor(
-        public readonly userService: UserService,
-        public readonly authService: AuthService,
-    ) {}
+    constructor(public readonly userService: UserService, public readonly authService: AuthService) {}
 
     @Post('register')
     @HttpCode(HttpStatus.OK)
-    async userRegister(
-        @Body() userRegisterDto: UserRegisterDto,
-    ): Promise<ReadUserDto> {
+    async userRegister(@Body() userRegisterDto: UserRegisterDto): Promise<ReadUserDto> {
         const user = await this.userService.register(userRegisterDto);
         return UserService.buildUserRO(user);
     }
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    async userLogin(
-        @Body() userLoginDto: UserLoginDto,
-    ): Promise<LoginPayloadDto> {
+    async userLogin(@Body() userLoginDto: UserLoginDto): Promise<LoginPayloadDto> {
         const userEntity = await this.authService.validateUser(userLoginDto);
         const token = await this.authService.createToken(userEntity);
         return new LoginPayloadDto(UserService.buildUserRO(userEntity), token);
