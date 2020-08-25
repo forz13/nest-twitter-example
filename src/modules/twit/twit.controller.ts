@@ -1,15 +1,15 @@
 import { Body, Controller, Get, HttpCode, Param, Post, UseGuards, UseInterceptors, Query, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '../../guards/auth.guard';
 import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
-import { TwitService } from './twit.service';
+import { TwitService } from './services/twit.service';
 import { TwitNotFoundException } from '../../exceptions/twit-not-found.exception';
-import { TwitCreateDto } from './twit/twitCreate.dto';
-import { TwitUpdateDto } from './twit/twitUpdate.dto';
-import { TwitPageOptionsDto } from './twit/twitPageOptionsDto';
-import { TwitPageDto } from './twit/twitPageDto';
+import { TwitCreateDto } from './dto/twitCreate.dto';
+import { TwitUpdateDto } from './dto/twitUpdate.dto';
+import { TwitPageOptionsDto } from './dto/twitPageOptionsDto';
+import { TwitPageDto } from './dto/twitPageDto';
 import { AuthUser } from '../../decorators/auth-user.decorator';
 import { UserEntity } from '../user/user.entity';
-import { TwitReadDto } from './twit/twitReadDto';
+import { TwitReadDto } from './dto/twitReadDto';
 
 @Controller('twit')
 @UseGuards(AuthGuard)

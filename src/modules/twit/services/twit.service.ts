@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TwitEntity } from './twit.entity';
-import { TwitReadDto } from './twit/twitReadDto';
-import { TwitCreateDto } from './twit/twitCreate.dto';
-import { TwitHasTagEntity } from './twitHasTag.entity';
-import { TagEntity } from '../tag/tag.entity';
-import { TagService } from '../tag/tag.service';
-import { TagCreateDto } from '../tag/dto/tagCreate.dto';
-import { TwitPageOptionsDto } from './twit/twitPageOptionsDto';
-import { TwitPageDto } from './twit/twitPageDto';
-import { PageMetaDto } from '../../common/dto/PageMetaDto';
-import { UtilsService } from '../../providers/utils.service';
-import { TwitLikeEntity } from './twitLike.entity';
+import { TwitEntity } from '../entity/twit.entity';
+import { TwitReadDto } from '../dto/twitReadDto';
+import { TwitCreateDto } from '../dto/twitCreate.dto';
+import { TwitHasTagEntity } from '../entity/twitHasTag.entity';
+import { TagEntity } from '../../tag/tag.entity';
+import { TagService } from '../../tag/tag.service';
+import { TagCreateDto } from '../../tag/dto/tagCreate.dto';
+import { TwitPageOptionsDto } from '../dto/twitPageOptionsDto';
+import { TwitPageDto } from '../dto/twitPageDto';
+import { PageMetaDto } from '../../../common/dto/PageMetaDto';
+import { UtilsService } from '../../../providers/utils.service';
+import { TwitLikeEntity } from '../entity/twitLike.entity';
 
 @Injectable()
 export class TwitService {
@@ -148,7 +148,6 @@ export class TwitService {
     }
 
     public async setLike(userID: number, twit: TwitEntity): Promise<void> {
-        const options = { where: { user_id: userID, id: twit.id } };
         const twitLike = await this.twitLikeEntityRepository.findOne({
             where: { user_id: userID, twit_id: twit.id },
         });

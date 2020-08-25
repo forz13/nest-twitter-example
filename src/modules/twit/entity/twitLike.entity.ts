@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeUpdate, ManyToOne, BeforeInsert } from 'typeorm';
 import { TwitEntity } from './twit.entity';
-import { UtilsService } from '../../providers/utils.service';
-import { UserEntity } from '../user/user.entity';
+import { UtilsService } from '../../../providers/utils.service';
+import { UserEntity } from '../../user/user.entity';
 
 @Entity('tbl_twit_like')
 export class TwitLikeEntity {
